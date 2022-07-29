@@ -3,8 +3,8 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const SECRET = process.env.SECRET;
-const users = (sequelize, DataTypes) => {
-    const model = sequelize.define("users", {
+const drivers = (sequelize, DataTypes) => {
+    const model = sequelize.define("drivers", {
         username: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -20,11 +20,12 @@ const users = (sequelize, DataTypes) => {
         },
         role: {
             type: DataTypes.ENUM("admin", "user", "driver", "resturant_owner"),
-            defaultValue: "user",
+            defaultValue: "driver",
         },
 
         email: { type: DataTypes.STRING },
         phone: { type: DataTypes.INTEGER, required: true },
+        car_model: { type: DataTypes.STRING },
         location: { type: DataTypes.JSONB }
     }, { timestamps: false });
 
@@ -63,4 +64,4 @@ const users = (sequelize, DataTypes) => {
     return model;
 };
 
-module.exports = users;
+module.exports = drivers;
