@@ -1,23 +1,20 @@
-"use strict";
+'use strict';
 
 const restModel = (sequelize, DataTypes) =>
-    sequelize.define(
-        "restaurants",
-        {
-            name: { type: DataTypes.STRING, required: true },
+  sequelize.define(
+    'restaurants',
+    {
+      name: { type: DataTypes.STRING },
 
-            type: { type: DataTypes.STRING, required: true },
+      order_path: { type: DataTypes.INTEGER },
 
-            order_path: { type: DataTypes.INTEGER },
+      rating: { type: DataTypes.FLOAT(6) },
 
-            rating: { type: DataTypes.STRING },
+      delivery_fee: { type: DataTypes.FLOAT(6) },
 
-            delivery_fee: { type: DataTypes.STRING },
-
-            location: { type: DataTypes.JSONB }
-
-        },
-        { timestamps: false }
-    );
+      location: { type: DataTypes.JSONB },
+    },
+    { timestamps: false }
+  );
 
 module.exports = restModel;
