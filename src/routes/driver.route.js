@@ -1,14 +1,14 @@
 // const driverRouter =require ("../models/index");
 
 const express = require('express');
-const bearer = require('../auth/middleware/bearer');
-const role = require('../auth/middleware/role');
-
-const { orderTable, restTable, users } = require('../auth/models/index');
-
+const bearer = require('../middleware/bearer.middleware');
+const role = require('../middleware/role.middleware');
+const { orderTable, restTable, users } = require('../models/index.model');
 const driverRouter = express.Router();
-driverRouter.get('/driver', bearer, role('driver'), getAllOrder);
+
+driverRouter.get('/driver', bearer(1), role('driver'), getAllOrder);
 driverRouter.put('/driver/:id', bearer, role('driver'), updateStatues);
+
 async function getAllOrder(req, res) {
   let orders = await orderTable.findAll({
     where: { status: 'Restaurant-is-preparing' },
