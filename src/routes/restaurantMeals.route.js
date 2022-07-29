@@ -1,10 +1,9 @@
 'use strict';
 
-'use strict';
 
 const express = require('express');
-const bearer = require('../auth/middleware/bearer');
-const { mealTable, restTable } = require('../auth/models/index');
+const bearer = require('../middleware/bearer.middleware');
+const { mealTable, restTable } = require('../models/index.model');
 const restaurantMealRouter = express.Router();
 
 restaurantMealRouter.get('/rest', bearer, handleGetAllUser);

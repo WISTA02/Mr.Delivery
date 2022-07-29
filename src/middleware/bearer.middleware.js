@@ -1,6 +1,6 @@
 'use strict';
 
-const { users, drivers, owners } = require('../models/index');
+const { users, drivers, owners } = require('../models/index.model');
 
 module.exports = (index) => {
   let tableArr = [users, drivers, owners];
@@ -24,4 +24,3 @@ module.exports = (index) => {
   };
 };
 
-module.exports = bearer;

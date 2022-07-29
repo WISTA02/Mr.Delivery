@@ -1,9 +1,9 @@
 'use strict';
 const express = require('express');
-const bearer = require('../auth/middleware/bearer');
-const role = require('../auth/middleware/role');
+const bearer = require('../middleware/bearer.middleware');
+const role = require('../middleware/role.middleware');
 
-const { users } = require('../auth/models/index');
+const { users } = require('../models/index.model');
 
 const locationRouter = express.Router();
 locationRouter.put(
