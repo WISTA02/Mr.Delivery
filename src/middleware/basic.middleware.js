@@ -1,5 +1,5 @@
 'use strict';
-const { users, drivers, owners } = require('../models/index');
+const { users, drivers, owners } = require('../models/index.model');
 
 const base64 = require('base-64');
 

@@ -1,11 +1,11 @@
 'use strict';
 
 const express = require('express');
-const bearer = require('../auth/middleware/bearer');
-const role = require('../auth/middleware/role');
+const bearer = require('../middleware/bearer.middleware');
+const role = require('../middleware/role.middleware');
 const { Sequelize, DataTypes } = require('sequelize');
 const Op = Sequelize.Op;
-const { restTable, mealTable } = require('../auth/models/index');
+const { restTable, mealTable } = require('../models/index.model');
 
 const searchRouter = express.Router();
 searchRouter.get('/search', bearer, search);

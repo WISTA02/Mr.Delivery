@@ -3,6 +3,7 @@ const express = require('express');
 const getUsersRouter = express.Router();
 const { users } = require('../models/index.model');
 const bearer = require('../middleware/bearer.middleware');
+const role = require('../middleware/role.middleware');
 
 getUsersRouter.get(
   '/users',

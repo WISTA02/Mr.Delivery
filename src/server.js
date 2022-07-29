@@ -6,21 +6,20 @@ const cors = require('cors');
 const morgan = require('morgan');
 
 // Esoteric Resources
-const searchRouter = require('./routes/searchRouter');
-const ownerRouter = require('./routes/ownerRouter');
-const locationRouter = require('./routes/locationRouter');
-const errorHandler = require('./error-handlers/500.js');
-const notFound = require('./error-handlers/404.js');
-const signInRouter = require('./routes/signInRouter');
-const signUpRouter = require('./routes/signUpRouter');
-const secretRouter = require('./routes/secretRouter');
-const getUsersRouter = require('./routes/allUsersRouter');
-const restaurantRouter = require('./routes/restaurantRouter');
-const orderRouter = require('./routes/orderRouter');
-const mealRouter = require('./routes/mealRouter');
-const restaurantMealRouter = require('./routes/restaurantMealsRouter');
-
-const driverRouter = require('./routes/driver');
+const searchRouter = require('./routes/search.route');
+const ownerRouter = require('./routes/owner.route');
+const locationRouter = require('./routes/location.route');
+const errorHandler = require('./middleware/error-handlers/500');
+const notFound = require('./middleware/error-handlers/404');
+const signInRouter = require('./routes/signin.route');
+const signUpRouter = require('./routes/signup.route');
+// const secretRouter = require('./routes/secretRouter');
+const getUsersRouter = require('./routes/user.router');
+const restaurantRouter = require('./routes/restaurant.route');
+const orderRouter = require('./routes/order.route');
+const mealRouter = require('./routes/meal.route');
+const restaurantMealRouter = require('./routes/restaurantMeals.route');
+const driverRouter = require('./routes/driver.route');
 
 // Prepare the express app
 const app = express();
@@ -36,7 +35,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(signUpRouter);
 app.use(signInRouter);
 app.use(ownerRouter);
-app.use(secretRouter);
+// app.use(secretRouter);
 app.use(locationRouter);
 app.use(restaurantMealRouter);
 app.use(searchRouter);
@@ -48,8 +47,8 @@ app.use(orderRouter);
 app.use(driverRouter);
 
 // Catchalls
-app.use(notFound);
-app.use(errorHandler);
+// app.use(notFound);
+// app.use(errorHandler);
 
 module.exports = {
   server: app,

@@ -2,16 +2,16 @@
 
 const express = require('express');
 
-const bearer = require('../auth/middleware/bearer');
+const bearer = require('../middleware/bearer.middleware');
 
 const {
   orderCollection,
   mealTable,
   restTable,
   orderTable,
-} = require('../auth/models/index');
+} = require('../models/index.model');
 
-const role = require('../auth/middleware/role');
+const role = require('../middleware/role.middleware');
 const orderRouter = express.Router();
 orderRouter.get('/order', bearer, role(['owner']), handleGetAll);
 orderRouter.get('/order/:id', bearer, role(), handleGetOne);
