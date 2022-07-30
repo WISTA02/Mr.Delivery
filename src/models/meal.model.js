@@ -9,6 +9,8 @@ const mealModel = (sequelize, DataTypes) =>
       description: { type: DataTypes.STRING, required: true },
 
       price: { type: DataTypes.FLOAT(6) },
+
+      restaurant_id: { type: DataTypes.INTEGER },
     },
     { timestamps: false }
   );

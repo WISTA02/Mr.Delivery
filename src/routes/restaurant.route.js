@@ -6,30 +6,20 @@ const restaurantRouter = express.Router();
 const bearer = require('../middleware/bearer.middleware');
 const role = require('../middleware/role.middleware');
 
-restaurantRouter.get('/restaurant', bearer(0), role(['admin']), handleGetAll);
-restaurantRouter.get(
-  '/restaurant/:id',
-  bearer(0),
-  role(['admin']),
-  handleGetOne
-);
-restaurantRouter.post('/restaurant', bearer(0), role(['admin']), handleCreate);
-restaurantRouter.put(
-  '/restaurant/:id',
-  bearer(0),
-  role(['admin']),
-  handleUpdate
-);
+restaurantRouter.get('/restaurant', bearer, role(['admin']), handleGetAll);
+restaurantRouter.get('/restaurant/:id', bearer, role(['admin']), handleGetOne);
+restaurantRouter.post('/restaurant', bearer, role(['admin']), handleCreate);
+restaurantRouter.put('/restaurant/:id', bearer, role(['admin']), handleUpdate);
 restaurantRouter.delete(
   '/restaurant/:id',
-  bearer(0),
+  bearer,
   role(['admin']),
   handleDelete
 );
 
 async function handleGetAll(req, res) {
-  let resturants = await restCollection.read();
-  res.status(200).json(resturants);
+  let restaurant = await restCollection.read();
+  res.status(200).json(restaurant);
 }
 
 async function handleGetOne(req, res) {
@@ -42,10 +32,9 @@ async function handleCreate(req, res) {
   try {
     let newResturant = {
       name: req.body.name,
-      rating: req.body.rating,
       delivery_fee: req.body.delivery_fee,
       location: req.body.location,
-      ownerid,
+      owner_id: req.body.owner_id,
     };
 
     let user_Id = req.user.id;

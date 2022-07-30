@@ -6,7 +6,7 @@ const role = require('../middleware/role.middleware');
 const { orderTable, restTable, users } = require('../models/index.model');
 const driverRouter = express.Router();
 
-driverRouter.get('/driver', bearer(1), role('driver'), getAllOrder);
+driverRouter.get('/driver', bearer, role('driver'), getAllOrder);
 driverRouter.put('/driver/:id', bearer, role('driver'), updateStatues);
 
 async function getAllOrder(req, res) {
@@ -19,7 +19,7 @@ async function getAllOrder(req, res) {
 let deliveryStatusCounter = 0;
 async function updateStatues(req, res) {
   let status = ['Driver-accepted', 'Out-for-delivery', 'Delivered'];
-  ``;
+
   try {
     let orderID = req.params.id;
     let updated = await orderTable.update(
