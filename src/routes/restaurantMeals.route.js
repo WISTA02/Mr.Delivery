@@ -1,19 +1,14 @@
 'use strict';
 
-
 const express = require('express');
 const bearer = require('../middleware/bearer.middleware');
+const role = require('../middleware/role.middleware');
 const { mealTable, restTable } = require('../models/index.model');
 const restaurantMealRouter = express.Router();
 
-restaurantMealRouter.get('/rest', bearer, handleGetAllUser);
-restaurantMealRouter.get('/rest/:id', bearer, handleGetAll);
+restaurantMealRouter.get('/rest', bearer, role(['user']), handleGetAllUser);
+restaurantMealRouter.get('/rest/:id', bearer, role(['user']), handleGetAll);
 
-async function handleGetAll(req, res) {
-  let restId = req.params.id;
-  let meals = await mealTable.findAll({ where: { resturantId: restId } });
-  res.status(200).json(meals);
-}
 async function handleGetAllUser(req, res) {
   let userLocation = req.user.location['city'];
   console.log(userLocation);
@@ -22,4 +17,11 @@ async function handleGetAllUser(req, res) {
   });
   res.status(200).json(restaurants);
 }
+async function handleGetAll(req, res) {
+  let restId = req.params.id;
+  console.log(` !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ${restId}`);
+  let meals = await mealTable.findAll({ where: { restaurant_id: restId } });
+  res.status(200).json(meals);
+}
+
 module.exports = restaurantMealRouter;

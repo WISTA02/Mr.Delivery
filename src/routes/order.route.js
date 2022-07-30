@@ -15,7 +15,7 @@ const role = require('../middleware/role.middleware');
 const orderRouter = express.Router();
 orderRouter.get('/order', bearer, role(['owner']), handleGetAll);
 orderRouter.get('/order/:id', bearer, role(), handleGetOne);
-orderRouter.post('/order', bearer, role(['user']), handleCreate);
+orderRouter.post('/order/:id', bearer, role(['user']), handleCreate);
 orderRouter.put('/order/:id', bearer, role(['owner', 'driver']), handleUpdate);
 orderRouter.delete('/order/:id', bearer, role(), handleDelete);
 
@@ -31,13 +31,13 @@ async function handleGetAll(req, res) {
     let notAcceptedOrders = await orderTable.findAll({
       where: {
         status: 'Restaurant-is-accepting',
-        resturantId: ownerRestId,
+        restaurant_id: ownerRestId,
       },
     });
     allOrders = notAcceptedOrders;
   } else {
     allOrders = await orderTable.findAll({
-      where: { resturantId: ownerId },
+      where: { restaurant_id: ownerId },
     });
   }
   res.status(200).json(allOrders);
@@ -51,32 +51,28 @@ async function handleGetOne(req, res) {
 }
 
 async function handleCreate(req, res) {
-  let restId;
   let mealForDelivery = await mealTable.findOne({
-    where: { id: req.body.all_items[0]['meal-id'] },
+    where: { id: req.body.all_items[0]['meal_id'] },
   });
+
   let restForDelivery = await restTable.findOne({
-    where: { id: mealForDelivery.id },
+    where: { id: req.params.id },
   });
-  let deliveryFee = restForDelivery.delivery_fee;
+  let deliveryFee = restForDelivery['delivery_fee'];
   let totalPrice = deliveryFee;
-  console.log(deliveryFee);
   for (const element of req.body.all_items) {
-    let mealId = element['meal-id'];
+    let mealId = element['meal_id'];
     let quantity = element['quantity'];
     let meal = await mealTable.findOne({ where: { id: mealId } });
-    restId = meal.resturantId;
-    let mealPrice = meal.price;
+    let mealPrice = meal['price'];
     let currentPrice = mealPrice * quantity;
     totalPrice += currentPrice;
   }
   let newOrder = {
     all_items: req.body.all_items,
-    status: req.body.status,
     total_price: totalPrice,
-    driver_ID: req.body.driver_ID,
     userId: req.user.id,
-    resturantId: restId,
+    restaurant_id: req.params.id,
   };
   let order = await orderCollection.create(newOrder);
   res.status(201).json(order);

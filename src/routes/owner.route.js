@@ -17,20 +17,18 @@ ownerRouter.get('/order/history', bearer, role(['owner']), handleGetOne);
 ownerRouter.put('/order/owner/:id', bearer, role(['owner']), handleUpdate);
 
 async function handleGetAll(req, res) {
-  console.log('******************************************************');
-  let ownerRest = await restTable.findOne({
-    where: { owner: req.user.id },
+  let restaurant = await restTable.findOne({
+    where: { owner_id: req.user.id },
   });
-  let ownerRestId = ownerRest.id;
+  let restaurantId = restaurant.id;
   let notAcceptedOrders = await orderTable.findAll({
     where: {
-      status: 'Restaurant-is-accepting',
-      resturantId: ownerRestId,
+      status: 'New-order',
+      restaurant_id: restaurantId,
     },
   });
-  let allOrders = notAcceptedOrders;
 
-  res.status(200).send('gg');
+  res.status(200).json(notAcceptedOrders);
 }
 
 async function handleGetOne(req, res) {
@@ -42,7 +40,7 @@ async function handleGetOne(req, res) {
 
 async function handleUpdate(req, res) {
   const orderId = parseInt(req.params.id);
-  const updatedOrder = req.body.status;
+  const updatedOrder = { status: req.body.status };
   let order = await orderCollection.read(orderId);
 
   if (order) {

@@ -6,6 +6,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 
 // Esoteric Resources
+
 const searchRouter = require('./routes/search.route');
 const ownerRouter = require('./routes/owner.route');
 const locationRouter = require('./routes/location.route');
@@ -19,7 +20,7 @@ const restaurantRouter = require('./routes/restaurant.route');
 const orderRouter = require('./routes/order.route');
 const mealRouter = require('./routes/meal.route');
 const restaurantMealRouter = require('./routes/restaurantMeals.route');
-const driverRouter = require('./routes/driver.route');
+const driverRouter = require('./routes/driverInformation.route');
 
 // Prepare the express app
 const app = express();
@@ -34,9 +35,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(signUpRouter);
 app.use(signInRouter);
-app.use(ownerRouter);
 // app.use(secretRouter);
 app.use(locationRouter);
+app.use(ownerRouter);
 app.use(restaurantMealRouter);
 app.use(searchRouter);
 app.use(getUsersRouter);
@@ -47,8 +48,8 @@ app.use(orderRouter);
 app.use(driverRouter);
 
 // Catchalls
-// app.use(notFound);
-// app.use(errorHandler);
+app.use(notFound);
+app.use(errorHandler);
 
 module.exports = {
   server: app,
