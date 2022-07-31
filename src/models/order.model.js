@@ -18,6 +18,7 @@ const orderDetailsModel = (sequelize, DataTypes) =>
         ),
       },
       total_price: { type: DataTypes.FLOAT(6) },
+      rated:{type:DataTypes.BOOLEAN,defaultValue:false}
     },
     { timestamps: false }
   );
