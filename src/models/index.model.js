@@ -1,7 +1,7 @@
 'use strict';
 
 require('dotenv').config();
-const { Sequelize, DataTypes, hasOne } = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize');
 const users = require('./user.model');
 const drivers = require('./driver.model');
 const DataCollection = require('./lib/collection.model');
@@ -44,9 +44,6 @@ const restCollection = new DataCollection(restTable);
 
 userTable.hasMany(orderTable); // user many orders
 orderTable.belongsTo(userTable); // order one user
-
-userTable.hasOne(driverTable);
-driverTable.belongsTo(userTable);
 
 module.exports = {
   db: sequelize,

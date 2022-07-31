@@ -13,7 +13,7 @@ const {
 
 const ownerRouter = express.Router();
 ownerRouter.get('/order/owner', bearer, role(['owner']), handleGetAll);
-ownerRouter.get('/order/history', bearer, role(['owner']), handleGetOne);
+ownerRouter.get('/order/owner-history', bearer, role(['owner']), handleGetOne);
 ownerRouter.put('/order/owner/:id', bearer, role(['owner']), handleUpdate);
 
 async function handleGetAll(req, res) {
@@ -40,7 +40,7 @@ async function handleGetOne(req, res) {
 
 async function handleUpdate(req, res) {
   const orderId = parseInt(req.params.id);
-  const updatedOrder = { status: req.body.status };
+  const updatedOrder = { status: 'Restaurant-is-preparing' };
   let order = await orderCollection.read(orderId);
 
   if (order) {

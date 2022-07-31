@@ -7,7 +7,12 @@ const { mealTable, restTable } = require('../models/index.model');
 const restaurantMealRouter = express.Router();
 
 restaurantMealRouter.get('/rest', bearer, role(['user']), handleGetAllUser);
-restaurantMealRouter.get('/rest/:id', bearer, role(['user']), handleGetAll);
+restaurantMealRouter.get(
+  '/rest-meal/:id',
+  bearer,
+  role(['user']),
+  handleGetAll
+);
 
 async function handleGetAllUser(req, res) {
   let userLocation = req.user.location['city'];
@@ -19,7 +24,6 @@ async function handleGetAllUser(req, res) {
 }
 async function handleGetAll(req, res) {
   let restId = req.params.id;
-  console.log(` !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ${restId}`);
   let meals = await mealTable.findAll({ where: { restaurant_id: restId } });
   res.status(200).json(meals);
 }

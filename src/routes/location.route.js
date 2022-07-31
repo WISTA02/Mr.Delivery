@@ -9,7 +9,7 @@ const locationRouter = express.Router();
 locationRouter.put(
   '/location',
   bearer,
-  role(['user', 'driver', 'owner']),
+  role(['user', 'driver']),
   updateLocation
 );
 
