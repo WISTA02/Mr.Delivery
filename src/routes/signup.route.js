@@ -16,11 +16,16 @@ signUpRouter.post('/signup', async (req, res) => {
       phone: req.body.phone,
       email: req.body.email,
     };
-    const driverData = {
-      car_number: req.body.car_number,
-    };
+
     const userRecord = await users.create(userData);
-    const driverRecord = await driverTable.create(driverData);
+    if (req.body.role === 'driver') {
+      const driverData = {
+        car_number: req.body.car_number,
+        driver_id: userRecord.id,
+      };
+      const driverRecord = await driverTable.create(driverData);
+    }
+
     res.status(201).json(userRecord);
   } catch (e) {
     res.status(404).end();

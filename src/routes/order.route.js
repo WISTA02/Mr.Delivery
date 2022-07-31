@@ -13,11 +13,11 @@ const {
 
 const role = require('../middleware/role.middleware');
 const orderRouter = express.Router();
-orderRouter.get('/order', bearer, role(['owner']), handleGetAll);
-orderRouter.get('/order/:id', bearer, role(), handleGetOne);
+orderRouter.get('/order', bearer, role(['admin']), handleGetAll);
+orderRouter.get('/order/:id', bearer, role(['admin']), handleGetOne);
 orderRouter.post('/order/:id', bearer, role(['user']), handleCreate);
-orderRouter.put('/order/:id', bearer, role(['owner', 'driver']), handleUpdate);
-orderRouter.delete('/order/:id', bearer, role(), handleDelete);
+orderRouter.put('/order/:id', bearer, role(['admin']), handleUpdate);
+orderRouter.delete('/order/:id', bearer, role(['admin']), handleDelete);
 
 async function handleGetAll(req, res) {
   let allOrders;
@@ -80,7 +80,7 @@ async function handleCreate(req, res) {
 
 async function handleUpdate(req, res) {
   const orderId = parseInt(req.params.id);
-  const updatedOrder = req.body.status;
+  const updatedOrder = req.body;
   let order = await orderCollection.read(orderId);
 
   if (order) {
