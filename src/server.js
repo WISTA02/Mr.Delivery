@@ -20,7 +20,8 @@ const restaurantRouter = require('./routes/restaurant.route');
 const orderRouter = require('./routes/order.route');
 const mealRouter = require('./routes/meal.route');
 const restaurantMealRouter = require('./routes/restaurantMeals.route');
-const driverRouter = require('./routes/driverInformation.route');
+const driverRouter = require('./routes/driver.route');
+const driverInfoRouter = require('./routes/driverInformation.route');
 
 // Prepare the express app
 const app = express();
@@ -44,6 +45,7 @@ app.use(getUsersRouter);
 app.use(mealRouter);
 app.use(restaurantRouter);
 app.use(orderRouter);
+app.use(driverInfoRouter);
 // Routes
 app.use(driverRouter);
 // app.use(ratingRouter);
