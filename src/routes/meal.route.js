@@ -5,12 +5,11 @@ const bearer = require('../middleware/bearer.middleware');
 const role = require('../middleware/role.middleware');
 const router = express.Router();
 
-
 const { mealsCollection, restTable } = require('../models/index.model');
 
 router.get('/meal', bearer, handleGetAll);
 router.get('/meal/:id', bearer, role(['admin']), handleGetOne);
-router.post('/meal', bearer, role(['admin']), handleCreate);
+router.post('/meal/:id', bearer, role(['admin']), handleCreate);
 router.put('/meal/:id', bearer, role(['admin']), handleUpdate);
 router.delete('/meal/:id', bearer, role(['admin']), handleDelete);
 
@@ -26,7 +25,12 @@ async function handleGetOne(req, res) {
 }
 
 async function handleCreate(req, res) {
-  let obj = req.body;
+  let obj = {
+    name: req.body.name,
+    description: req.body.description,
+    price: req.body.price,
+    restaurant_id: req.params.id,
+  };
   let newRecord = await mealsCollection.create(obj);
   res.status(201).json(newRecord);
 }

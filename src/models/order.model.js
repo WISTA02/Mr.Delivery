@@ -1,12 +1,11 @@
 'use strict';
 
-const sequelize = require('sequelize');
-
 const orderDetailsModel = (sequelize, DataTypes) =>
   sequelize.define(
     'orders',
     {
       all_items: { type: DataTypes.ARRAY(DataTypes.JSONB) },
+
       status: {
         type: DataTypes.ENUM(
           'New-order',
@@ -16,9 +15,12 @@ const orderDetailsModel = (sequelize, DataTypes) =>
           'Delivered',
           'Cancelled'
         ),
+        defaultValue: 'New-order',
       },
       total_price: { type: DataTypes.FLOAT(6) },
-      rated:{type:DataTypes.BOOLEAN,defaultValue:false}
+      rated:{type:DataTypes.BOOLEAN,defaultValue:false},
+
+      restaurant_id: { type: DataTypes.INTEGER },
     },
     { timestamps: false }
   );

@@ -20,22 +20,20 @@ const users = (sequelize, DataTypes) => {
         type: DataTypes.VIRTUAL,
       },
       role: {
-        type: DataTypes.ENUM('admin', 'user', 'driver', 'resturant_owner'),
+        type: DataTypes.ENUM('admin', 'user', 'driver', 'owner'),
         defaultValue: 'user',
       },
 
       email: { type: DataTypes.STRING },
-      phone: { type: DataTypes.INTEGER },
+
+      phone: { type: DataTypes.STRING },
+
       location: { type: DataTypes.JSONB },
+
+      profits: { type: DataTypes.FLOAT(6), defaultValue: 0 },
     },
     { timestamps: false }
   );
-
-  model.beforeCreate = async function (password) {
-    let hashedPass = await bcrypt.hash(password, 50);
-
-    return hashedPass;
-  };
 
   model.authenticateBasic = async function (username, password) {
     const user = await this.findOne({ where: { username: username } });

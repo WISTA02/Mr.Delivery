@@ -1,17 +1,15 @@
 'use strict';
-const { users, drivers, owners } = require('../models/index.model');
+const { users } = require('../models/index.model');
 
 const base64 = require('base-64');
 
-module.exports = (index) => async (req, res, next) => {
-  let tableArr = [users, drivers, owners];
+module.exports = async (req, res, next) => {
   let basicHeaderParts = req.headers.authorization.split(' ');
   let encodedString = basicHeaderParts.pop();
   let decodedString = base64.decode(encodedString);
   let [username, password] = decodedString.split(':');
-  console.log(password);
   try {
-    req.user = await tableArr[index].authenticateBasic(username, password);
+    req.user = await users.authenticateBasic(username, password);
 
     next();
   } catch (e) {

@@ -15,7 +15,6 @@ locationRouter.put(
 
 async function updateLocation(req, res) {
   let location = req.body.location;
-  console.log(location[0]);
   let updated = await users.update(
     { location: location },
     { where: { id: req.user.id } }
