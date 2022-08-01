@@ -20,6 +20,8 @@ const orderDetailsModel = (sequelize, DataTypes) =>
       total_price: { type: DataTypes.FLOAT(6) },
 
       restaurant_id: { type: DataTypes.INTEGER },
+
+      driver_id: { type: DataTypes.INTEGER },
     },
     { timestamps: false }
   );

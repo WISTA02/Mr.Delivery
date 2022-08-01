@@ -6,8 +6,6 @@ const drivers = (sequelize, DataTypes) => {
     {
       car_number: { type: DataTypes.INTEGER },
 
-      status_counter: { type: DataTypes.INTEGER, defaultValue: 0 },
-
       driver_id: { type: DataTypes.INTEGER },
     },
 

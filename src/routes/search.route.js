@@ -8,9 +8,10 @@ const Op = Sequelize.Op;
 const { restTable, mealTable } = require('../models/index.model');
 const searchRouter = express.Router();
 
-searchRouter.get('/search', bearer, role(['user']), search);
+searchRouter.get('/search', bearer, role(['user']), searchRestaurant);
+searchRouter.get('/search-meal', bearer, role(['user']), searchMeal);
 
-async function search(req, res) {
+async function searchRestaurant(req, res) {
   if (req.body.query) {
     let restaurant = await restTable.findAll({
       where: {
@@ -24,17 +25,20 @@ async function search(req, res) {
     else {
       res.status(200).json(restaurant);
     }
-    // let meal = await mealTable.findAll({
-    //   where: {
-    //     location: { city: req.user.location['city'] },
-    //     name: {
-    //       [Op.like]: `%${req.body.meal}%`,
-    //     },
-    //   },
-    // });
   } else {
-    res.status(200).send('There are no meals match this name');
+    res.status(200).send('Enter some text in the search bar');
   }
+}
+async function searchMeal(req, res) {
+  //  let meal = await mealTable.findAll({
+  //   where: {
+  //     location: { city: req.user.location['city'] },
+  //     name: {
+  //       [Op.like]: `%${req.body.meal}%`,
+  //     },
+  //   },
+  // });
+  // res.status(200).json(meal);
 }
 
 module.exports = searchRouter;
