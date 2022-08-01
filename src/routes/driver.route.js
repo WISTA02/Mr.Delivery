@@ -11,6 +11,8 @@ const driverRouter = express.Router();
 
 driverRouter.get('/driver', bearer, role(['driver']), getAllOrder);
 driverRouter.put('/driver/:id', bearer, role(['driver']), updateStatus);
+driverRouter.get('/order/driver-history', bearer, role(['driver']), handleGetHistory);
+
 
 async function getAllOrder(req, res) {
   let orders = await orderTable.findAll({
@@ -24,26 +26,46 @@ async function getAllOrder(req, res) {
 async function updateStatus(req, res) {
   try {
     let orderId = req.params.id;
-    const statusArr = ['Driver-accepted', 'Out-for-delivery', 'Delivered'];
-    const driver = await driverTable.findOne({
-      where: { driver_id: req.user.id },
-    });
-    const counter = driver.status_counter;
+    let nextStatus;
     let order = await orderTable.findOne({ where: { id: orderId } });
-    let driverUpdating = await order.update({
-      status: statusArr[counter],
-    });
-    const updateCounter = await driver.update({
-      status_counter: counter + 1,
-    });
-    if (updateCounter.status_counter == 3) {
-      const resetCounter = await driver.update({ status_counter: 0 });
+    let orderStatus = order.status;
+    if (orderStatus === 'Restaurant-is-preparing') {
     }
-    res.status(201).json(driverUpdating);
+    switch (orderStatus) {
+      case 'Restaurant-is-preparing':
+        let addDriverId = await order.update({ driver_id: req.user.id });
+        nextStatus = 'Driver-accepted';
+        break;
+      case 'Driver-accepted':
+        nextStatus = 'Out-for-delivery';
+        break;
+      case 'Out-for-delivery':
+        nextStatus = 'Delivered';
+        break;
+      default:
+        break;
+    }
+    let updateStatus = await order.update({ status: nextStatus });
+
+    res.status(201).json(updateStatus);
   } catch (error) {
     console.log(error);
     res.status(500).send(error.message);
   }
+}
+
+async function handleGetHistory(req, res) {
+  let driver = await users.findOne({
+    where: { id: req.user.id },
+  });
+
+  let orders = await orderTable.findAll({
+    where: {
+      status: 'Delivered',
+    },
+  });
+
+  res.status(200).json(orders);
 }
 
 module.exports = driverRouter;
