@@ -11,6 +11,8 @@ const driverRouter = express.Router();
 
 driverRouter.get('/driver', bearer, role(['driver']), getAllOrder);
 driverRouter.put('/driver/:id', bearer, role(['driver']), updateStatus);
+driverRouter.get('/order/driver-history', bearer, role(['driver']), handleGetHistory);
+
 
 async function getAllOrder(req, res) {
   let orders = await orderTable.findAll({
@@ -44,6 +46,20 @@ async function updateStatus(req, res) {
     console.log(error);
     res.status(500).send(error.message);
   }
+}
+
+async function handleGetHistory(req, res) {
+  let driver = await users.findOne({
+    where: { id: req.user.id },
+  });
+
+  let orders = await orderTable.findAll({
+    where: {
+      status: 'Delivered',
+    },
+  });
+
+  res.status(200).json(orders);
 }
 
 module.exports = driverRouter;
