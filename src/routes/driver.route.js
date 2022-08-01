@@ -59,9 +59,11 @@ async function handleGetHistory(req, res) {
     where: { id: req.user.id },
   });
 
+  let driverId = driver.id;
   let orders = await orderTable.findAll({
     where: {
       status: 'Delivered',
+      driver_id: driverId,
     },
   });
 
