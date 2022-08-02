@@ -5,9 +5,7 @@ const { users, orderTable } = require('../models/index.model');
 const bearer = require('../middleware/bearer.middleware');
 const role = require('../middleware/role.middleware');
 
-
-
-getUsersRouter.get('/order/user-history', bearer, role(['user']), handleGetHistory);
+getUsersRouter.get('/user-history', bearer, role(['user']), handleGetHistory);
 
 async function handleGetHistory(req, res) {
   let user = await users.findOne({

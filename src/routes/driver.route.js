@@ -11,8 +11,7 @@ const driverRouter = express.Router();
 
 driverRouter.get('/driver', bearer, role(['driver']), getAllOrder);
 driverRouter.put('/driver/:id', bearer, role(['driver']), updateStatus);
-driverRouter.get('/order/driver-history', bearer, role(['driver']), handleGetHistory);
-
+driverRouter.get('/driver-history', bearer, role(['driver']), handleGetHistory);
 
 async function getAllOrder(req, res) {
   let orders = await orderTable.findAll({
