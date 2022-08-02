@@ -23,6 +23,9 @@ const orderDetailsModel = (sequelize, DataTypes) =>
       restaurant_id: { type: DataTypes.INTEGER },
 
       driver_id: { type: DataTypes.INTEGER },
+
+      rated:{type:DataTypes.BOOLEAN,defaultValue:false},
+
     },
     { timestamps: false }
   );

@@ -1,7 +1,15 @@
 'use strict';
 
 const express = require('express');
-
+// const Events = require('events');
+// const events = new Events();
+require('dotenv').config();
+/////////////////////socket.io///////////////////////
+// const io = require('socket.io-client');
+// let PORT =process.env.PORT;
+// let host = `http://localhost:${PORT}`;
+// const customerConnection = io.connect(host);
+//////////////////////////////////////////////////////
 const bearer = require('../middleware/bearer.middleware');
 
 const {
@@ -51,6 +59,7 @@ async function handleGetOne(req, res) {
 }
 
 async function handleCreate(req, res) {
+
   let mealForDelivery = await mealTable.findOne({
     where: { id: req.body.all_items[0]['meal_id'] },
   });
@@ -74,7 +83,9 @@ async function handleCreate(req, res) {
     userId: req.user.id,
     restaurant_id: req.params.id,
   };
+  // customerConnection.emit("new_order",newOrder);
   let order = await orderCollection.create(newOrder);
+  // customerConnection.emit("new_order",newOrder);
   res.status(201).json(order);
 }
 
