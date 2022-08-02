@@ -22,6 +22,7 @@ const mealRouter = require('./routes/meal.route');
 const restaurantMealRouter = require('./routes/restaurantMeals.route');
 const driverRouter = require('./routes/driver.route');
 const driverInfoRouter = require('./routes/driverInformation.route');
+const profitsRoute = require('./routes/profits.route')
 
 // Prepare the express app
 const app = express();
@@ -48,6 +49,7 @@ app.use(orderRouter);
 app.use(driverInfoRouter);
 // Routes
 app.use(driverRouter);
+app.use(profitsRoute);
 
 // Catchalls
 app.use(notFound);
