@@ -29,7 +29,7 @@ const profitsRoute = require('./routes/profits.route')
 
 const ratingRouter = require("./routes/rating.route");
 
-
+const socketRouter=require("./routes/socket.route");
 // Prepare the express app
 const app = express();
 app.use(cors({
@@ -97,7 +97,7 @@ app.use(profitsRoute);
 
 app.use(ratingRouter);
 
-
+app.use(socketRouter)
 // Catchalls
 app.use(notFound);
 app.use(errorHandler);
