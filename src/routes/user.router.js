@@ -20,7 +20,7 @@ async function handleGetHistory(req, res) {
 
   res.status(200).json(orders);
 }
-getUsersRouter.get('/users', bearer, role('admin'), async (req, res, next) => {
+getUsersRouter.get('/users',  async (req, res, next) => {
   const userRecords = await users.findAll();
   res.status(200).json(userRecords);
 });
