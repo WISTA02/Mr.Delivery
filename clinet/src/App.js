@@ -1,59 +1,37 @@
 import "./App.css";
 import { io } from "socket.io-client";
-import { useEffect, useState } from "react";
-import Chat from "./compoents/Chat";
-import ToggleColorMode from "./compoents/ToggleColorMode";
+import { useState } from "react";
+import Chat from "./Chat";
+import ToggleColorMode from "./ToggleColorMode";
 import axios from "axios";
 
-const socket = io.connect("http://localhost:3020");
+const socket = io.connect("http://localhost:5000");
 function App() {
   const [username, setUsername] = useState("");
   const [room, setRoom] = useState("");
   const [showChat, setShowChat] = useState(false);
-  const [data, setData] = useState([]);
 
-  /**axios.post('/user', {
-    firstName: 'Fred',
-    lastName: 'Flintstone'
-  }) */
   function joinRoom() {
     if (username !== "" && room !== "") {
-      let user;
-      axios.get("http://localhost:3020/getUser").then((user)=>{
-// for(const element in user){
-//   // if( element.username==username)
-//   console.log(element);
-// }
-if(user.data[0].username==username)
-{
-  socket.emit("join_room", room);
-  setShowChat(true);
-
-}
-else{
-  alert("access denied")
-}
-// console.log("yes");
-      }).catch((e)=>{console.log(e);})
-      // if(username==)
-      
+      axios.get("http://localhost:5000/getUser")
+        .then((user) => {
+          console.log(user.data);
+          for (let i = 0; i <= user.data.length - 1; i++) {
+            if (user.data[i].username === username) {
+              if ((room === "driver-customer" )&&( user.data[i].role === 'user' || user.data[i].role === "driver")) {
+                socket.emit("join_room", room);
+                setShowChat(true);
+              }
+              if ((room === "owner-driver") && (user.data[i].role === 'owner' || user.data[i].role === "driver")) {
+                socket.emit("join_room", room);
+                setShowChat(true);
+              }
+            }
+          }
+        })
+        .catch((e) => { console.log(e); })
     }
   }
-  function getData() {
-    // axios
-    //   .get("http://localhost:3020/users")
-    //   .then((a) => {
-    //     console.log(a.data);
-    //     console.log("insideeeee");
-    //     setData(a.data)
-    //     return a;
-    //   })
-    //   .catch((e) => console.error("eee----------------->e" + e));
-  }
-  useEffect(() => {
-    // getData();
-    console.log("hhhhhhhkh",data);
-  }, []);
   return (
     <div className="App">
       <ToggleColorMode></ToggleColorMode>
@@ -67,23 +45,17 @@ else{
               setUsername(event.target.value);
             }}
           />
-          {/* <input
-            type="text"
-            placeholder="Room ID..."
-            onChange={(event) => {
-              setRoom(event.target.value);
-            }}
-          /> */}
           <select value={room} onChange={(event) => {
-              setRoom(event.target.value);
-            }}>
+            setRoom(event.target.value);
+          }}>
+            <option value="none">Select an Option</option>
             <option value="driver-customer">driver-customer</option>
+            <option value="owner-driver">owner-driver</option>
           </select>
-
           <button onClick={joinRoom}>Join A Room</button>
         </div>
       ) : (
-        <Chat socket={socket} username={username} room={room} />
+        <Chat key={socket.id} socket={socket} username={username} room={room} />
       )}
     </div>
   );

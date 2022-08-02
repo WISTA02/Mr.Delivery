@@ -37,8 +37,8 @@ app.use(cors({
   methods:["GET","POST","PUT","DELETE"],
   credentials:true,            //access-control-allow-credentials:true
 }));
-const server = http.createServer(app);
 
+const server = http.createServer(app);
 app.get('/', (req, res) => {
   res.send('Home');
 });
