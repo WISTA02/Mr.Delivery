@@ -15,7 +15,12 @@ const restModel = (sequelize, DataTypes) =>
       profits: { type: DataTypes.FLOAT(6), defaultValue: 0 },
 
       owner_id: { type: DataTypes.INTEGER },
+
+      rating: { type: DataTypes.FLOAT(6),defaultValue:0.0},
+
+      count: { type: DataTypes.INTEGER },
     },
+    
     { timestamps: false }
   );
 
