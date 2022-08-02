@@ -1,12 +1,7 @@
 const express = require('express');
 const bearer = require('../middleware/bearer.middleware');
 const role = require('../middleware/role.middleware');
-const {
-  orderTable,
-  restTable,
-  users,
-  driverTable,
-} = require('../models/index.model');
+const { orderTable, restTable, users } = require('../models/index.model');
 const driverRouter = express.Router();
 
 driverRouter.get('/driver', bearer, role(['driver']), getAllOrder);
@@ -28,7 +23,9 @@ async function updateStatus(req, res) {
     let orderId = req.params.id;
     let nextStatus;
     let order = await orderTable.findOne({ where: { id: orderId } });
+    let driverId = order.driver_id;
     let orderStatus = order.status;
+    let restaurantId = order.restaurant_id;
     if (orderStatus === 'Restaurant-is-preparing') {
     }
     switch (orderStatus) {
@@ -41,6 +38,22 @@ async function updateStatus(req, res) {
         break;
       case 'Out-for-delivery':
         nextStatus = 'Delivered';
+
+        let app = await users.findOne({ where: { role: "admin" } });
+        let driver = await users.findOne({ where: { id: driverId } });
+        let restaurant = await restTable.findOne({ where: { id: restaurantId } })
+        let profitsApp = app.profits;
+        let profitsDriver = driver.profits;
+        let profitsRestaurant = restaurant.profits;
+
+        profitsRestaurant = profitsRestaurant + (order.total_price - restaurant.delivery_fee) * .8;
+        profitsApp = profitsApp + (order.total_price - restaurant.delivery_fee) * .2 + restaurant.delivery_fee * .5;
+        profitsDriver = profitsDriver + restaurant.delivery_fee * .5;
+
+        app.update({ profits: profitsApp });
+        driver.update({ profits: profitsDriver });
+        restaurant.update({ profits: profitsRestaurant });
+
         break;
       default:
         break;
