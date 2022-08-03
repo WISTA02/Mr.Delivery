@@ -237,7 +237,7 @@ Configure the root of your repository with the following files and directories. 
 <br>
 
 ## UML
-
+![UML](./assets/UML.png)
 
 
 <br>
@@ -249,6 +249,25 @@ Configure the root of your repository with the following files and directories. 
 ![ER-Diagram](./assets/ER-Diagram.png)
 
 <br>
+
+## Wireframe
+![Wireframe](./assets/signin.jpg)
+
+<br>
+
+![Wireframe](./assets/signup.jpg)
+
+<br>
+
+![Wireframe](./assets/user.jpg)
+
+<br>
+
+![Wireframe](./assets/driver2.jpg)
+
+
+
+
 
 ## Installation
 - Mr.Delivery requires Node.js v14+ to run.
