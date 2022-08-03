@@ -43,6 +43,13 @@ Configure the root of your repository with the following files and directories. 
 
 * client - contains files and folders for chat-application
 
+* __test__/ - contains unit tests
+
+* package.json - contains npm package config
+
+  - create a test script for running tests
+  - create a start script for running your server
+
 <br>
 
 ## Authrization
@@ -84,6 +91,30 @@ Configure the root of your repository with the following files and directories. 
 * socket.io
 
 * socket.io-client 
+
+* supertest
+
+* jest
+
+* axios
+
+* react
+
+* react-dom
+
+* react-fetch-hook
+
+* react-scripts
+
+* react-scroll-to-bottom
+
+* react-superagent
+
+* socket.io-client
+
+* superagent
+
+* web-vitals
 
 
 
