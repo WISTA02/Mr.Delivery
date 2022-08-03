@@ -91,17 +91,11 @@ Configure the root of your repository with the following files and directories. 
 
 |    **method**        |   **link**      |  **Description** |
 | -----------          | -----------     | ------------     |
-
 |    POST              |  /signup   |    Signup    |
-
 |    POST              |  /signin   |  	 Signin    |
-
 |    PUT               |   /updateAccount   |  Delete user recored|
-
 |   DELETE             |  /deleteAccount    |  Update user recored|
-
 |    GET               |   /users    |  Get all users for admin|
-
 |    GET               |   /secret   |  Get The token and description for users|
 
 
@@ -111,16 +105,12 @@ Configure the root of your repository with the following files and directories. 
 
 ## // Restaurant>> 
 
-|    method    |   link     |  Description |
-
+|    **method**        |   **link**      |  **Description** |
+| -----------          | -----------     | ------------     |
 |    GET      |  /restaurant  |    Get All Restaurant   |
-
 |    GET      |  /restaurant/:id  |    Get Specific Restaurant   |
-
 |    POST      |  /restaurant  |    Create Restaurant    |
-
 |    PUT      |  /restaurant/:id  |  	 Update Restaurant    |
-
 |   DELETE     |  /restaurant/:id    |  Delete Restaurant|
 
 <br>
@@ -128,16 +118,12 @@ Configure the root of your repository with the following files and directories. 
 
 ## // Meal>>
 
-|    method  |   link     |     Description     |
-
+|    **method**        |   **link**      |  **Description** |
+| -----------          | -----------     | ------------     |
 |    GET     |  /meal      |    Get All Meal    |
-
 |    GET     |  /meal/:id  |  Get Specific Meal |
-
 |    POST    |  /meal      |    Create Meal     |
-
 |    PUT     |  /meal/:id  |  	 Update Meal    |
-
 |   DELETE   |  /meal/:id  |  Delete Meal       |
 
 
@@ -145,16 +131,12 @@ Configure the root of your repository with the following files and directories. 
 
 ## // driver Information>>
 
-|    method  |   link     |     Description     |
-
+|    **method**        |   **link**      |  **Description** |
+| -----------          | -----------     | ------------     |
 |    GET     |  /driverinfo      |    Get All Driverinfo      |
-
 |    GET     |  /driverinfo/:id  |  Get Specific Driverinfo   |
-
 |    POST    |  /driverinfo      |    Create Driverinfo       |
-
 |    PUT     |  /driverinfo/:id  |     Update Driverinfo      |
-
 |   DELETE   |  /driverinfo/:id  |     Delete Driverinfo      |
 
 
@@ -163,23 +145,19 @@ Configure the root of your repository with the following files and directories. 
 
 
 ## Driver-Routes
-|    method    |   link               |        Description            |
-
+|    **method**        |   **link**      |  **Description** |
+| -----------          | -----------     | ------------     |
 |    GET       |  /driver             |       Get All Driverinfo      |
-
 |    PUT       |  /driver/:id        |         Update Status          |
-
 |    GET       |  /driver-history     |      Get Driver History       |
 
 <br>
 
 ## Owner-Routes
-|    method    |         link                 |        Description           |
-
+|    **method**        |   **link**      |  **Description** |
+| -----------          | -----------     | ------------     |
 |    GET       |      /order/owner            |       Get All Owner          |
-
 |    PUT       |     /order/owner/:id         |       Update Owner           |
-
 |    GET       |      /owner-history          |     Get Owner History        |
 
 
@@ -189,8 +167,8 @@ Configure the root of your repository with the following files and directories. 
 
 ## // Location-Route>>
 
-|    method    |      link            |        Description             |
-
+|    **method**        |   **link**      |  **Description** |
+| -----------          | -----------     | ------------     |
 |    PUT       |     /location        |       Update Location          |
 
 
@@ -199,16 +177,12 @@ Configure the root of your repository with the following files and directories. 
 ## // Order-Route>>
 
 
-|    method    |      link         |        Description        |
-
+|    **method**        |   **link**      |  **Description** |
+| -----------          | -----------     | ------------     |
 |    GET       |     /order        |      Get All Order        |
-
 |    GET       |   /order/:id      |    Get Specific Order     |
-
 |    POST      |    /order         |      Create Order         |
-
 |    PUT       |   /order/:id      |  	  Update Order         |
-
 |   DELETE     |   /order/:id      |      Delete Order         |
  
 
@@ -216,30 +190,27 @@ Configure the root of your repository with the following files and directories. 
 
 ## // Rating-Route>>
 
-|    method    |      link         |        Description          |
-
+|    **method**        |   **link**      |  **Description** |
+| -----------          | -----------     | ------------     |
 |    GET       |     /rating        |      Get User Order        |
-
 |    PUT       |   /rating/:id      |    Update Rating           |
 
 <br>
 
 ## // RestaurantMeals-Route>>
 
-|    method    |      link             |        Description        |
-
+|    **method**        |   **link**      |  **Description** |
+| -----------          | -----------     | ------------     |
 |    GET       |     /rest             |      Get All Restaurant In The Same Location        |
-
 |    GET       |   /rest-meal/:id      |    Get All Meals     |
 
 <br>
 
 ## // Search-Route>>
 
-|    method    |      link           |        Description        |
-
+|    **method**        |   **link**      |  **Description** |
+| -----------          | -----------     | ------------     |
 |    GET       |     /search         |      Search Restaurant    |
-
 |    GET       |   /search-meal      |      Search Meal          |
 
 
@@ -247,12 +218,10 @@ Configure the root of your repository with the following files and directories. 
 
 ## Profits-Route
 
-|    method    |       link              |       Description         |
-
+|    **method**        |   **link**      |  **Description** |
+| -----------          | -----------     | ------------     |
 |    GET       |     /profits-owner        |      Get Profit Owner   |
-
 |    GET       |     /profits-app        |      Get Profit App       |
-
 |    GET       |     /profits-driver     |      Get Profit Driver    |
 
 
@@ -260,8 +229,8 @@ Configure the root of your repository with the following files and directories. 
 
 ## Socket-Route
 
-|    method    |   link            |     Description       |
-
+|    **method**        |   **link**      |  **Description** |
+| -----------          | -----------     | ------------     |
 |    GET       |     /getUser      |      Get All User     |
 
 
