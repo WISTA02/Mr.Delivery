@@ -1,7 +1,7 @@
 'use strict';
 const express = require('express');
 const signInRouter = express.Router();
-const basicAuth = require('../middleware/basic.middleware');
+const basicAuth = require('../../middleware/basic.middleware');
 
 signInRouter.post('/signin', basicAuth, (req, res) => {
   const user = {

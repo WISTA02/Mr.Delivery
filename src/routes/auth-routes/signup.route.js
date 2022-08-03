@@ -1,7 +1,7 @@
 'use strict';
 const express = require('express');
 require('dotenv').config();
-const { users, driverTable } = require('../models/index.model');
+const { users, driverTable } = require('../../models/index.model');
 const bcrypt = require('bcrypt');
 const signUpRouter = express.Router();
 

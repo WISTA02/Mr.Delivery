@@ -1,10 +1,10 @@
 'use strict';
 
 const express = require('express');
-const bearer = require('../middleware/bearer.middleware');
-const role = require('../middleware/role.middleware');
+const bearer = require('../../middleware/bearer.middleware');
+const role = require('../../middleware/role.middleware');
 const driverInfoRouter = express.Router();
-const { driverCollection, driverTable } = require('../models/index.model');
+const { driverCollection, driverTable } = require('../../models/index.model');
 
 driverInfoRouter.get('/driverinfo', bearer, role(['admin']), handleGetAll);
 driverInfoRouter.get('/driverinfo/:id', bearer, role(['admin']), handleGetOne);

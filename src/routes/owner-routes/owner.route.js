@@ -1,22 +1,21 @@
 'use strict';
 
 const express = require('express');
-const bearer = require('../middleware/bearer.middleware');
-const role = require('../middleware/role.middleware');
+const bearer = require('../../middleware/bearer.middleware');
+const role = require('../../middleware/role.middleware');
 
 const {
   orderCollection,
   mealTable,
   restTable,
   orderTable,
-} = require('../models/index.model');
+} = require('../../models/index.model');
 
 const ownerRouter = express.Router();
 ownerRouter.get('/order/owner', bearer, role(['owner']), handleGetAll);
 // ownerRouter.get('/order/owner-history', bearer, role(['owner']), handleGetOne);
 ownerRouter.put('/order/owner/:id', bearer, role(['owner']), handleUpdate);
-ownerRouter.get('/order/owner-history', bearer, role(['owner']), handleGetHistory);
-
+ownerRouter.get('/owner-history', bearer, role(['owner']), handleGetHistory);
 
 async function handleGetAll(req, res) {
   let restaurant = await restTable.findOne({
@@ -32,7 +31,6 @@ async function handleGetAll(req, res) {
 
   res.status(200).json(notAcceptedOrders);
 }
-
 
 // async function handleGetOne(req, res) {
 //   const orderId = parseInt(req.params.id);
