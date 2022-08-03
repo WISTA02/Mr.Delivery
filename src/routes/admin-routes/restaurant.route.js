@@ -1,10 +1,10 @@
 'use strict';
 
 const express = require('express');
-const { restCollection } = require('../models/index.model');
+const { restCollection } = require('../../models/index.model');
 const restaurantRouter = express.Router();
-const bearer = require('../middleware/bearer.middleware');
-const role = require('../middleware/role.middleware');
+const bearer = require('../../middleware/bearer.middleware');
+const role = require('../../middleware/role.middleware');
 
 restaurantRouter.get('/restaurant', bearer, role(['admin']), handleGetAll);
 restaurantRouter.get('/restaurant/:id', bearer, role(['admin']), handleGetOne);
