@@ -104,7 +104,7 @@ async function handleUpdate(req, res) {
     } else {
       res.status(404);
     }
-  } catch (error) {
+  } catch {
     res.status(500).send("Invalid input");
   }
 
