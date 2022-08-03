@@ -1,13 +1,12 @@
 const express = require('express');
-const bearer = require('../middleware/bearer.middleware');
-const role = require('../middleware/role.middleware');
-const { orderTable, restTable, users } = require('../models/index.model');
+const bearer = require('../../middleware/bearer.middleware');
+const role = require('../../middleware/role.middleware');
+const { orderTable, restTable, users } = require('../../models/index.model');
 const driverRouter = express.Router();
 
 driverRouter.get('/driver', bearer, role(['driver']), getAllOrder);
 driverRouter.put('/driver/:id', bearer, role(['driver']), updateStatus);
-driverRouter.get('/order/driver-history', bearer, role(['driver']), handleGetHistory);
-
+driverRouter.get('/driver-history', bearer, role(['driver']), handleGetHistory);
 
 async function getAllOrder(req, res) {
   let orders = await orderTable.findAll({
@@ -39,16 +38,23 @@ async function updateStatus(req, res) {
       case 'Out-for-delivery':
         nextStatus = 'Delivered';
 
-        let app = await users.findOne({ where: { role: "admin" } });
+        let app = await users.findOne({ where: { role: 'admin' } });
         let driver = await users.findOne({ where: { id: driverId } });
-        let restaurant = await restTable.findOne({ where: { id: restaurantId } })
+        let restaurant = await restTable.findOne({
+          where: { id: restaurantId },
+        });
         let profitsApp = app.profits;
         let profitsDriver = driver.profits;
         let profitsRestaurant = restaurant.profits;
 
-        profitsRestaurant = profitsRestaurant + (order.total_price - restaurant.delivery_fee) * .8;
-        profitsApp = profitsApp + (order.total_price - restaurant.delivery_fee) * .2 + restaurant.delivery_fee * .5;
-        profitsDriver = profitsDriver + restaurant.delivery_fee * .5;
+        profitsRestaurant =
+          profitsRestaurant +
+          (order.total_price - restaurant.delivery_fee) * 0.8;
+        profitsApp =
+          profitsApp +
+          (order.total_price - restaurant.delivery_fee) * 0.2 +
+          restaurant.delivery_fee * 0.5;
+        profitsDriver = profitsDriver + restaurant.delivery_fee * 0.5;
 
         app.update({ profits: profitsApp });
         driver.update({ profits: profitsDriver });
