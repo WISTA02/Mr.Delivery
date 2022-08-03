@@ -41,9 +41,8 @@ async function handleCreate(req, res) {
     newResturant.userId = user_Id;
     let newRecored = await restCollection.create(newResturant);
     res.status(201).json(newRecored);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send(error.message);
+  } catch {
+    res.status(500).send('Invalid input');
   }
 }
 

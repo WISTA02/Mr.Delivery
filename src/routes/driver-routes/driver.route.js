@@ -25,8 +25,6 @@ async function updateStatus(req, res) {
     let driverId = order.driver_id;
     let orderStatus = order.status;
     let restaurantId = order.restaurant_id;
-    if (orderStatus === 'Restaurant-is-preparing') {
-    }
     switch (orderStatus) {
       case 'Restaurant-is-preparing':
         let addDriverId = await order.update({ driver_id: req.user.id });
@@ -67,9 +65,8 @@ async function updateStatus(req, res) {
     let updateStatus = await order.update({ status: nextStatus });
 
     res.status(201).json(updateStatus);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send(error.message);
+  } catch {
+    res.status(500).send("Invalid input");
   }
 }
 

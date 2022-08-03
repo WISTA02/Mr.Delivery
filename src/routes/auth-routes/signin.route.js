@@ -4,9 +4,14 @@ const signInRouter = express.Router();
 const basicAuth = require('../../middleware/basic.middleware');
 
 signInRouter.post('/signin', basicAuth, (req, res) => {
-  const user = {
-    user: req.user,
-  };
-  res.status(200).json(user);
+  try {
+    const user = {
+      user: req.user,
+    };
+    res.status(200).json(user);
+  } catch {
+    res.status(500).send("Invalid login");
+  }
+
 });
 module.exports = signInRouter;

@@ -11,16 +11,31 @@ profitsRouter.get('/profits-app', bearer, role(["admin"]), handleGetProfitApp);
 profitsRouter.get('/profits-driver', bearer, role(["driver"]), handleGetProfitDriver);
 
 async function handleGetProfitOwner(req, res) {
-    let restaurant = await restTable.findOne({ where: { owner_id: req.user.id } });
-    res.status(200).json(restaurant);
+    try {
+        let restaurant = await restTable.findOne({ where: { owner_id: req.user.id } });
+        res.status(200).json(restaurant);
+    } catch {
+        res.status(404).send('not found any profits');
+    }
+
 }
 async function handleGetProfitApp(req, res) {
-    let app = await users.findOne({ where: { role: "admin" } });
-    res.status(200).json(app);
+    try {
+        let app = await users.findOne({ where: { role: "admin" } });
+        res.status(200).json(app);
+    } catch {
+        res.status(404).send('not fiund any profits');
+    }
+
 }
 async function handleGetProfitDriver(req, res) {
-    let driver = await users.findOne({ where: { id: req.user.id } });
-    res.status(200).json(driver);
+    try {
+        let driver = await users.findOne({ where: { id: req.user.id } });
+        res.status(200).json(driver);
+    } catch {
+        res.status(404).send('not found any profits');
+    }
+
 }
 
 module.exports = profitsRouter;
