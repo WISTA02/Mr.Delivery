@@ -12,8 +12,8 @@ const {
 } = require('../models/index.model');
 
 const ownerRouter = express.Router();
-ownerRouter.get('/order/owner', bearer, role(['owner']), handleGetAll);
-ownerRouter.get('/order/owner-history', bearer, role(['owner']), handleGetOne);
+ownerRouter.get('/owner', bearer, role(['owner']), handleGetAll);
+ownerRouter.get('/owner-history', bearer, role(['owner']), handleGetOne);
 ownerRouter.put('/order/owner/:id', bearer, role(['owner']), handleUpdate);
 
 async function handleGetAll(req, res) {
