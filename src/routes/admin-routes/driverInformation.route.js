@@ -17,38 +17,60 @@ driverInfoRouter.delete(
 );
 
 async function handleGetAll(req, res) {
-  let allRecords = await driverCollection.read();
-  res.status(200).json(allRecords);
+  try {
+    let allRecords = await driverCollection.read();
+    res.status(200).json(allRecords);
+  } catch {
+    res.status(404).send('not found any data')
+  }
 }
 
 async function handleGetOne(req, res) {
   const id = req.params.id;
-  let driverRecord = await driverTable.findOne({
-    where: { driver_id: id },
-  });
-  res.status(200).json(driverRecord);
+  try {
+    let driverRecord = await driverTable.findOne({
+      where: { driver_id: id },
+    });
+    res.status(200).json(driverRecord);
+  } catch {
+    res.status(404).send('not found any data')
+  }
+
+
 }
 
 async function handleUpdate(req, res) {
   let id = req.params.id;
   let newRecored = req.body;
-  let driverRecord = await driverTable.findOne({
-    where: { driver_id: id },
-  });
-  if (driverRecord) {
-    let updated = await driverRecord.update(newRecored);
-    res.status(201).json(updated);
-  } else {
-    res.status(404).send('Not found');
+  try {
+    let driverRecord = await driverTable.findOne({
+      where: { driver_id: id },
+    });
+    if (driverRecord) {
+      let updated = await driverRecord.update(newRecored);
+      res.status(201).json(updated);
+    } else {
+      res.status(404).send('Not found');
+    }
+  } catch (error) {
+    res.status(500).send(error.message);
   }
+
+
 }
 
 async function handleDelete(req, res) {
   let id = req.params.id;
-  let deletedRecord = await driverTable.destroy({
-    where: { driver_id: id },
-  });
-  res.status(204);
+  try {
+    let deletedRecord = await driverTable.destroy({
+      where: { driver_id: id },
+    });
+    res.status(204).send('deleted');
+  }
+  catch {
+    res.status(500).send('Invalid Input')
+  }
+
 }
 
 module.exports = driverInfoRouter;

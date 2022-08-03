@@ -1,33 +1,81 @@
 'use strict';
 const express = require('express');
 const getUsersRouter = express.Router();
+const bcrypt = require('bcrypt');
 const { users, orderTable } = require('../models/index.model');
 const bearer = require('../middleware/bearer.middleware');
 const role = require('../middleware/role.middleware');
 
 getUsersRouter.get('/user-history', bearer, role(['user']), handleGetHistory);
+getUsersRouter.put('/edit-account', bearer, role(['user']), editAccount)
+getUsersRouter.delete('/delete-account', bearer, role(['user']), deletAccount)
 
 async function handleGetHistory(req, res) {
-  let user = await users.findOne({
-    where: { id: req.user.id },
-  });
+  try {
+    let user = await users.findOne({
+      where: { id: req.user.id },
+    });
 
-  let orders = await orderTable.findAll({
-    where: {
-      userId: user.id,
-    },
-  });
+    let orders = await orderTable.findAll({
+      where: {
+        userId: user.id,
+      },
+    });
 
-  res.status(200).json(orders);
+    res.status(200).json(orders);
+  } catch (error) {
+    res.status(404).send("not found any orders");
+  }
+
 }
 getUsersRouter.get('/users', bearer, role('admin'), async (req, res, next) => {
   const userRecords = await users.findAll();
   res.status(200).json(userRecords);
-  let payload={
-    room:"driver_customer",
-    order:"newOrder"
+  let payload = {
+    room: "driver_customer",
+    order: "newOrder"
   }
-  io.emit("join_room","y");
 });
+
+
+
+async function editAccount(req, res) {
+  try {
+    let user = await users.findOne({
+      where: { id: req.user.id },
+    });
+    if (user) {
+      const hashedPass = await bcrypt.hash(req.body.password, 10);
+      let updateAccount = user.update({
+        password: hashedPass,
+        role: req.body.role,
+        location: req.body.location,
+        phone: req.body.phone,
+        email: req.body.email,
+      })
+      res.status(200).json(updateAccount)
+    }
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+
+}
+
+async function deletAccount(req, res) {
+  try {
+    let user = await users.findOne({
+      where: { id: req.user.id },
+    });
+    if (user) {
+      let deleteduser = await users.destroy({
+        where: { id: user.id },
+      });
+      res.status(204).send('deleted Account');
+    }
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+
+}
 
 module.exports = getUsersRouter;

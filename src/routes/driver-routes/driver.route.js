@@ -9,12 +9,17 @@ driverRouter.put('/driver/:id', bearer, role(['driver']), updateStatus);
 driverRouter.get('/driver-history', bearer, role(['driver']), handleGetHistory);
 
 async function getAllOrder(req, res) {
-  let orders = await orderTable.findAll({
-    where: {
-      status: 'Restaurant-is-preparing',
-    },
-  });
-  res.status(200).json(orders);
+  try {
+    let orders = await orderTable.findAll({
+      where: {
+        status: 'Restaurant-is-preparing',
+      },
+    });
+    res.status(200).json(orders);
+  } catch {
+    res.status(404).end();
+  }
+
 }
 
 async function updateStatus(req, res) {
@@ -29,11 +34,16 @@ async function updateStatus(req, res) {
     }
     switch (orderStatus) {
       case 'Restaurant-is-preparing':
-        let addDriverId = await order.update({ driver_id: req.user.id });
         nextStatus = 'Driver-accepted';
+        let addDriverId = await order.update({ driver_id: req.user.id });
+        let restaurantOrder = await restTable.findOne({ where: { id: restaurantId } });
+        let restaurantLocation = restaurantOrder.location
+        res.status(200).json(restaurantLocation);
+
         break;
       case 'Driver-accepted':
         nextStatus = 'Out-for-delivery';
+
         break;
       case 'Out-for-delivery':
         nextStatus = 'Delivered';
@@ -74,19 +84,24 @@ async function updateStatus(req, res) {
 }
 
 async function handleGetHistory(req, res) {
-  let driver = await users.findOne({
-    where: { id: req.user.id },
-  });
+  try {
+    let driver = await users.findOne({
+      where: { id: req.user.id },
+    });
 
-  let driverId = driver.id;
-  let orders = await orderTable.findAll({
-    where: {
-      status: 'Delivered',
-      driver_id: driverId,
-    },
-  });
+    let driverId = driver.id;
+    let orders = await orderTable.findAll({
+      where: {
+        status: 'Delivered',
+        driver_id: driverId,
+      },
+    });
 
-  res.status(200).json(orders);
+    res.status(200).json(orders);
+  } catch (error) {
+    res.status(404).send('not found any orders');
+  }
+
 }
 
 module.exports = driverRouter;

@@ -93,22 +93,32 @@ async function handleCreate(req, res) {
 }
 
 async function handleUpdate(req, res) {
-  const orderId = parseInt(req.params.id);
-  const updatedOrder = req.body;
-  let order = await orderCollection.read(orderId);
+  try {
+    const orderId = parseInt(req.params.id);
+    const updatedOrder = req.body;
+    let order = await orderCollection.read(orderId);
 
-  if (order) {
-    let updated = await order.update(updatedOrder);
-    res.status(201).json(updated);
-  } else {
-    res.status(404);
+    if (order) {
+      let updated = await order.update(updatedOrder);
+      res.status(201).json(updated);
+    } else {
+      res.status(404);
+    }
+  } catch (error) {
+    res.status(500).send(error.message);
   }
+
 }
 
 async function handleDelete(req, res) {
-  let orderId = parseInt(req.params.id);
-  let order = await orderCollection.delete(orderId);
-  res.status(204).json(order);
+  try {
+    let orderId = parseInt(req.params.id);
+    let order = await orderCollection.delete(orderId);
+    res.status(204).json(order);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+
 }
 
 module.exports = orderRouter;

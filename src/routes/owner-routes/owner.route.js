@@ -12,63 +12,76 @@ const {
 } = require('../../models/index.model');
 
 const ownerRouter = express.Router();
-<<<<<<< HEAD:src/routes/owner.route.js
 ownerRouter.get('/owner', bearer, role(['owner']), handleGetAll);
 ownerRouter.get('/owner-history', bearer, role(['owner']), handleGetOne);
-=======
-ownerRouter.get('/order/owner', bearer, role(['owner']), handleGetAll);
-// ownerRouter.get('/order/owner-history', bearer, role(['owner']), handleGetOne);
->>>>>>> main:src/routes/owner-routes/owner.route.js
 ownerRouter.put('/order/owner/:id', bearer, role(['owner']), handleUpdate);
 ownerRouter.get('/owner-history', bearer, role(['owner']), handleGetHistory);
 
 async function handleGetAll(req, res) {
-  let restaurant = await restTable.findOne({
-    where: { owner_id: req.user.id },
-  });
-  let restaurantId = restaurant.id;
-  let notAcceptedOrders = await orderTable.findAll({
-    where: {
-      status: 'New-order',
-      restaurant_id: restaurantId,
-    },
-  });
+  try {
+    let restaurant = await restTable.findOne({
+      where: { owner_id: req.user.id },
+    });
+    let restaurantId = restaurant.id;
+    let notAcceptedOrders = await orderTable.findAll({
+      where: {
+        status: 'New-order',
+        restaurant_id: restaurantId,
+      },
+    });
 
-  res.status(200).json(notAcceptedOrders);
+    res.status(200).json(notAcceptedOrders);
+  } catch {
+    res.status(404).send('not found any orders');
+  }
+
 }
 
-// async function handleGetOne(req, res) {
-//   const orderId = parseInt(req.params.id);
+async function handleGetOne(req, res) {
+  try {
+    const orderId = parseInt(req.params.id);
 
-//   let order = await orderCollection.read(orderId);
-//   res.status(200).json(order);
-// }
+    let order = await orderCollection.read(orderId);
+    res.status(200).json(order);
+  } catch {
+    res.status(404).send('not found this order');
+  }
+}
 
 async function handleUpdate(req, res) {
-  const orderId = parseInt(req.params.id);
-  const updatedOrder = { status: 'Restaurant-is-preparing' };
-  let order = await orderCollection.read(orderId);
+  try {
+    const orderId = parseInt(req.params.id);
+    const updatedOrder = { status: 'Restaurant-is-preparing' };
+    let order = await orderCollection.read(orderId);
 
-  if (order) {
-    let updated = await order.update(updatedOrder);
-    res.status(201).json(updated);
-  } else {
-    res.status(404);
+    if (order) {
+      let updated = await order.update(updatedOrder);
+      res.status(201).json(updated);
+    } else {
+      res.status(404);
+    }
+  } catch (error) {
+    res.status(500).send(error.message);
   }
 }
 
 async function handleGetHistory(req, res) {
-  let restaurant = await restTable.findOne({
-    where: { owner_id: req.user.id },
-  });
-  let restaurantId = restaurant.id;
-  let orders = await orderTable.findAll({
-    where: {
-      restaurant_id: restaurantId,
-    },
-  });
+  try {
+    let restaurant = await restTable.findOne({
+      where: { owner_id: req.user.id },
+    });
+    let restaurantId = restaurant.id;
+    let orders = await orderTable.findAll({
+      where: {
+        restaurant_id: restaurantId,
+      },
+    });
 
-  res.status(200).json(orders);
+    res.status(200).json(orders);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+
 }
 
 module.exports = ownerRouter;
