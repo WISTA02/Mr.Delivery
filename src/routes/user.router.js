@@ -56,7 +56,7 @@ async function editAccount(req, res) {
       res.status(200).json(updateAccount)
     }
   } catch {
-    res.status(500).send(error.message);
+    res.status(500).send("Invalid login");
   }
 
 }
@@ -73,7 +73,7 @@ async function deletAccount(req, res) {
       res.status(204).send('deleted Account');
     }
   } catch {
-    res.status(500).send(error.message);
+    res.status(500).send("Invalid login");
   }
 
 }
