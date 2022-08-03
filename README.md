@@ -89,19 +89,20 @@ Configure the root of your repository with the following files and directories. 
 
 ## Auth Routes
 
-|    method    |   link     |  Description |
+|    **method**        |   **link**      |  **Description** |
+| -----------          | -----------     | ------------     |
 
-|    POST      |  /signup   |    Signup    |
+|    POST              |  /signup   |    Signup    |
 
-|    POST      |  /signin   |  	 Signin    |
+|    POST              |  /signin   |  	 Signin    |
 
-|    PUT       |   /updateAccount   |  Delete user recored|
+|    PUT               |   /updateAccount   |  Delete user recored|
 
-|   DELETE     |  /deleteAccount    |  Update user recored|
+|   DELETE             |  /deleteAccount    |  Update user recored|
 
-|    GET       |   /users    |  Get all users for admin|
+|    GET               |   /users    |  Get all users for admin|
 
-|    GET       |   /secret   |  Get The token and description for users|
+|    GET               |   /secret   |  Get The token and description for users|
 
 
 <br>
