@@ -1,15 +1,15 @@
 'use strict';
 
 const express = require('express');
-const bearer = require('../middleware/bearer.middleware');
-const role = require('../middleware/role.middleware');
+const bearer = require('../../middleware/bearer.middleware');
+const role = require('../../middleware/role.middleware');
 
 const {
   orderCollection,
   mealTable,
   restTable,
   orderTable,
-} = require('../models/index.model');
+} = require('../../models/index.model');
 
 const ownerRouter = express.Router();
 ownerRouter.get('/order/owner', bearer, role(['owner']), handleGetAll);

@@ -1,10 +1,10 @@
 'use strict';
 
 const express = require('express');
-const bearer = require('../middleware/bearer.middleware');
-const role = require('../middleware/role.middleware');
+const bearer = require('../../middleware/bearer.middleware');
+const role = require('../../middleware/role.middleware');
 const ratingRouter = express.Router();
-const { orderTable, restTable } = require('../models/index.model');
+const { orderTable, restTable } = require('../../models/index.model');
 
 ratingRouter.get('/rating', bearer, role(['user']), getUserOrders);
 ratingRouter.put('/rating/:id', bearer, role(['user']), ratingHandler);
