@@ -52,12 +52,15 @@ const io=new Server(server,{
 
   }
 })
-
+global.io=io;
 /*****************socket********************/
 io.on('connection', (socket) => {
   console.log(`user connected : ${socket.id}`);
+  socket.on("x",(data)=>{
+    console.log("-------------------------->");
+  })
   socket.on('join_room', (data) => {
-      socket.join(data);
+      socket.join(data.room);
       console.log(`user with id : ${socket.id} joind room : ${data}`);
   })
   socket.on('send_message', (data) => {
@@ -66,10 +69,11 @@ io.on('connection', (socket) => {
   socket.on('typing',(room)=>socket.in(room).emit('typing'))
   socket.on('stop_typing',(room)=>socket.in(room).emit('stop_typing'))
 
-
+ 
   socket.on('disconnect', () => {
       console.log('User diconnect', socket.id);
-  })
+  });
+ 
 })
 /*****************socket********************/
 

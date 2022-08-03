@@ -83,7 +83,11 @@ async function handleCreate(req, res) {
     userId: req.user.id,
     restaurant_id: req.params.id,
   };
-  // customerConnection.emit("new_order",newOrder);
+  let payload={
+    room:"driver_customer",
+    order:newOrder
+  }
+  io.emit("join_room",payload);
   let order = await orderCollection.create(newOrder);
   // customerConnection.emit("new_order",newOrder);
   res.status(201).json(order);

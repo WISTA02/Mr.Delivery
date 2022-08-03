@@ -25,6 +25,11 @@ async function handleGetHistory(req, res) {
 getUsersRouter.get('/users',  async (req, res, next) => {
   const userRecords = await users.findAll();
   res.status(200).json(userRecords);
+  let payload={
+    room:"driver_customer",
+    order:"newOrder"
+  }
+  io.emit("join_room","y");
 });
 
 module.exports = getUsersRouter;

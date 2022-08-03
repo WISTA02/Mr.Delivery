@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Chat from "./compoents/Chat";
 import ToggleColorMode from "./compoents/ToggleColorMode";
 import axios from "axios";
-
+// global.socket=socket;
 const socket = io.connect("http://localhost:3020");
 function App() {
   const [username, setUsername] = useState("");
@@ -12,32 +12,31 @@ function App() {
   const [showChat, setShowChat] = useState(false);
   const [data, setData] = useState([]);
 
-  /**axios.post('/user', {
-    firstName: 'Fred',
-    lastName: 'Flintstone'
-  }) */
-  function joinRoom() {
-    if (username !== "" && room !== "") {
-      let user;
-      axios.get("http://localhost:3020/getUser").then((user)=>{
-// for(const element in user){
-//   // if( element.username==username)
-//   console.log(element);
-// }
-if(user.data[0].username==username)
-{
+  socket.on("join_room",(data)=>{
+    joinRoom(data.data)
+    console.log("-------------------------->");
+  })
+  function joinRoom(x) {
+//     if (username !== "" && room !== "") {
+//       let user;
+//       axios.get("http://localhost:3020/getUser").then((user)=>{
+
+// if(user.data[0].username==username)
+// {
+  // username=x;
+  room=1;
   socket.emit("join_room", room);
   setShowChat(true);
 
-}
-else{
-  alert("access denied")
-}
-// console.log("yes");
-      }).catch((e)=>{console.log(e);})
-      // if(username==)
+// }
+// else{
+//   alert("access denied")
+// }
+// // console.log("yes");
+//       }).catch((e)=>{console.log(e);})
+//       // if(username==)
       
-    }
+//     }
   }
   function getData() {
     // axios
@@ -52,7 +51,6 @@ else{
   }
   useEffect(() => {
     // getData();
-    console.log("hhhhhhhkh",data);
   }, []);
   return (
     <div className="App">
@@ -80,7 +78,7 @@ else{
             <option value="driver-customer">driver-customer</option>
           </select>
 
-          <button onClick={joinRoom}>Join A Room</button>
+          {/* <button onClick={joinRoom}>Join A Room</button> */}
         </div>
       ) : (
         <Chat socket={socket} username={username} room={room} />
