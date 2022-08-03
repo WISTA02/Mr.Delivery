@@ -90,23 +90,6 @@ async function handleCreate(req, res) {
   } catch {
     res.status(403).send('Wrong input');
   }
-<<<<<<< HEAD:src/routes/order.route.js
-  let newOrder = {
-    all_items: req.body.all_items,
-    total_price: totalPrice,
-    userId: req.user.id,
-    restaurant_id: req.params.id,
-  };
-  let payload={
-    room:"driver_customer",
-    order:newOrder
-  }
-  io.emit("join_room",payload);
-  let order = await orderCollection.create(newOrder);
-  // customerConnection.emit("new_order",newOrder);
-  res.status(201).json(order);
-=======
->>>>>>> cb647ca799651871418976191d5698ffa7785703:src/routes/user-routes/order.route.js
 }
 
 async function handleUpdate(req, res) {

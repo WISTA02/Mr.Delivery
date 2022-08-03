@@ -11,7 +11,7 @@ function App() {
   const [room, setRoom] = useState('');
   const [showChat, setShowChat] = useState(false);
 
-
+let isHere=false;
   
   function joinRoom() {
     if (username !== '' && room !== '') {
@@ -25,8 +25,10 @@ function App() {
                 room === 'driver-customer' &&
                 (user.data[i].role === 'user' || user.data[i].role === 'driver')
               ) {
+
                 socket.emit('join_room', room);
                 setShowChat(true);
+                isHere=true;
               }
               if (
                 room === 'owner-driver' &&
@@ -35,9 +37,12 @@ function App() {
               ) {
                 socket.emit('join_room', room);
                 setShowChat(true);
+                isHere=true;
               }
             }
           }
+          if(isHere==false)
+          alert("Access Denied")
         })
         .catch((e) => {
           console.log(e);
