@@ -12,8 +12,13 @@ const {
 } = require('../../models/index.model');
 
 const ownerRouter = express.Router();
+<<<<<<< HEAD:src/routes/owner.route.js
+ownerRouter.get('/owner', bearer, role(['owner']), handleGetAll);
+ownerRouter.get('/owner-history', bearer, role(['owner']), handleGetOne);
+=======
 ownerRouter.get('/order/owner', bearer, role(['owner']), handleGetAll);
 // ownerRouter.get('/order/owner-history', bearer, role(['owner']), handleGetOne);
+>>>>>>> main:src/routes/owner-routes/owner.route.js
 ownerRouter.put('/order/owner/:id', bearer, role(['owner']), handleUpdate);
 ownerRouter.get('/owner-history', bearer, role(['owner']), handleGetHistory);
 
