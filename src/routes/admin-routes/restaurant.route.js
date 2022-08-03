@@ -18,24 +18,14 @@ restaurantRouter.delete(
 );
 
 async function handleGetAll(req, res) {
-  try {
-    let restaurant = await restCollection.read();
-    res.status(200).json(restaurant);
-  } catch {
-    res.status(404).send('not found any restaurant');
-  }
-
+  let restaurant = await restCollection.read();
+  res.status(200).json(restaurant);
 }
 
 async function handleGetOne(req, res) {
-  try {
-    const id = parseInt(req.params.id);
-    let recored = await restCollection.read(id);
-    res.status(200).json(recored);
-  } catch {
-    res.status(404).send('not found this restaurant');
-  }
-
+  const id = parseInt(req.params.id);
+  let recored = await restCollection.read(id);
+  res.status(200).json(recored);
 }
 
 async function handleCreate(req, res) {
@@ -51,35 +41,25 @@ async function handleCreate(req, res) {
     newResturant.userId = user_Id;
     let newRecored = await restCollection.create(newResturant);
     res.status(201).json(newRecored);
-  } catch (error) {
-    res.status(500).send(error.message);
+  } catch {
+    res.status(500).send('Invalid input');
   }
 }
 
 async function handleUpdate(req, res) {
-  try {
-    let id = parseInt(req.params.id);
-    let newRecored = req.body;
-    let foundValue = await restCollection.read(id);
-    if (foundValue) {
-      let updatedRecord = await foundValue.update(newRecored);
-      res.status(201).json(updatedRecord);
-    }
-  } catch (error) {
-    res.status(500).send(error.message);
+  let id = parseInt(req.params.id);
+  let newRecored = req.body;
+  let foundValue = await restCollection.read(id);
+  if (foundValue) {
+    let updatedRecord = await foundValue.update(newRecored);
+    res.status(201).json(updatedRecord);
   }
-
 }
 
 async function handleDelete(req, res) {
-  try {
-    let id = parseInt(req.params.id);
-    let deletedRecord = await restCollection.delete(id);
-    res.status(204).json(deletedRecord);
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-
+  let id = parseInt(req.params.id);
+  let deletedRecord = await restCollection.delete(id);
+  res.status(204).json(deletedRecord);
 }
 
 module.exports = restaurantRouter;

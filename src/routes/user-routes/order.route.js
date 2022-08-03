@@ -105,7 +105,7 @@ async function handleUpdate(req, res) {
       res.status(404);
     }
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).send("Invalid input");
   }
 
 }
@@ -115,8 +115,8 @@ async function handleDelete(req, res) {
     let orderId = parseInt(req.params.id);
     let order = await orderCollection.delete(orderId);
     res.status(204).json(order);
-  } catch (error) {
-    res.status(500).send(error.message);
+  } catch {
+    res.status(500).send("Invalid input");
   }
 
 }

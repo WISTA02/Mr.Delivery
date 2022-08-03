@@ -12,7 +12,7 @@ module.exports = async (req, res, next) => {
     req.user = await users.authenticateBasic(username, password);
 
     next();
-  } catch (e) {
+  } catch {
     res.status(403).send('Invalid Login');
   }
 };

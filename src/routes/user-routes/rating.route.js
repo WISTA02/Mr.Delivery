@@ -72,8 +72,8 @@ async function ratingHandler(req, res) {
         res.status(500).send(`There is no order  with ID=${orderId} for u`);
       }
     }
-  } catch (error) {
-    res.status(500).send(error.message);
+  } catch {
+    res.status(500).send('Invalid input');
   }
 
 

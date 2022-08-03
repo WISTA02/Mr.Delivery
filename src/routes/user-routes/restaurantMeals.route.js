@@ -22,7 +22,7 @@ async function getAllRest(req, res) {
       where: { location: { city: userLocation } },
     });
     res.status(200).json(restaurants);
-  } catch (error) {
+  } catch {
     res.status(404).send('not found any restaurant');
   }
 
@@ -32,7 +32,7 @@ async function getAllMeals(req, res) {
     let restId = req.params.id;
     let meals = await mealTable.findAll({ where: { restaurant_id: restId } });
     res.status(200).json(meals);
-  } catch (error) {
+  } catch {
     res.status(404).send('not found any meals');
   }
 

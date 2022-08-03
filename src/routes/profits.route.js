@@ -14,7 +14,7 @@ async function handleGetProfitOwner(req, res) {
     try {
         let restaurant = await restTable.findOne({ where: { owner_id: req.user.id } });
         res.status(200).json(restaurant);
-    } catch (error) {
+    } catch {
         res.status(404).send('not found any profits');
     }
 
@@ -23,7 +23,7 @@ async function handleGetProfitApp(req, res) {
     try {
         let app = await users.findOne({ where: { role: "admin" } });
         res.status(200).json(app);
-    } catch (error) {
+    } catch {
         res.status(404).send('not fiund any profits');
     }
 
@@ -32,7 +32,7 @@ async function handleGetProfitDriver(req, res) {
     try {
         let driver = await users.findOne({ where: { id: req.user.id } });
         res.status(200).json(driver);
-    } catch (error) {
+    } catch {
         res.status(404).send('not found any profits');
     }
 

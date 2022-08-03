@@ -9,17 +9,12 @@ driverRouter.put('/driver/:id', bearer, role(['driver']), updateStatus);
 driverRouter.get('/driver-history', bearer, role(['driver']), handleGetHistory);
 
 async function getAllOrder(req, res) {
-  try {
-    let orders = await orderTable.findAll({
-      where: {
-        status: 'Restaurant-is-preparing',
-      },
-    });
-    res.status(200).json(orders);
-  } catch {
-    res.status(404).end();
-  }
-
+  let orders = await orderTable.findAll({
+    where: {
+      status: 'Restaurant-is-preparing',
+    },
+  });
+  res.status(200).json(orders);
 }
 
 async function updateStatus(req, res) {
@@ -30,20 +25,13 @@ async function updateStatus(req, res) {
     let driverId = order.driver_id;
     let orderStatus = order.status;
     let restaurantId = order.restaurant_id;
-    if (orderStatus === 'Restaurant-is-preparing') {
-    }
     switch (orderStatus) {
       case 'Restaurant-is-preparing':
-        nextStatus = 'Driver-accepted';
         let addDriverId = await order.update({ driver_id: req.user.id });
-        let restaurantOrder = await restTable.findOne({ where: { id: restaurantId } });
-        let restaurantLocation = restaurantOrder.location
-        res.status(200).json(restaurantLocation);
-
+        nextStatus = 'Driver-accepted';
         break;
       case 'Driver-accepted':
         nextStatus = 'Out-for-delivery';
-
         break;
       case 'Out-for-delivery':
         nextStatus = 'Delivered';
@@ -77,31 +65,25 @@ async function updateStatus(req, res) {
     let updateStatus = await order.update({ status: nextStatus });
 
     res.status(201).json(updateStatus);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send(error.message);
+  } catch {
+    res.status(500).send("Invalid input");
   }
 }
 
 async function handleGetHistory(req, res) {
-  try {
-    let driver = await users.findOne({
-      where: { id: req.user.id },
-    });
+  let driver = await users.findOne({
+    where: { id: req.user.id },
+  });
 
-    let driverId = driver.id;
-    let orders = await orderTable.findAll({
-      where: {
-        status: 'Delivered',
-        driver_id: driverId,
-      },
-    });
+  let driverId = driver.id;
+  let orders = await orderTable.findAll({
+    where: {
+      status: 'Delivered',
+      driver_id: driverId,
+    },
+  });
 
-    res.status(200).json(orders);
-  } catch (error) {
-    res.status(404).send('not found any orders');
-  }
-
+  res.status(200).json(orders);
 }
 
 module.exports = driverRouter;

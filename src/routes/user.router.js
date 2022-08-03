@@ -23,7 +23,7 @@ async function handleGetHistory(req, res) {
     });
 
     res.status(200).json(orders);
-  } catch (error) {
+  } catch {
     res.status(404).send("not found any orders");
   }
 
@@ -55,7 +55,7 @@ async function editAccount(req, res) {
       })
       res.status(200).json(updateAccount)
     }
-  } catch (error) {
+  } catch {
     res.status(500).send(error.message);
   }
 
@@ -72,7 +72,7 @@ async function deletAccount(req, res) {
       });
       res.status(204).send('deleted Account');
     }
-  } catch (error) {
+  } catch {
     res.status(500).send(error.message);
   }
 

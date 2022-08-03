@@ -29,7 +29,7 @@ async function searchRestaurant(req, res) {
     } else {
       res.status(200).send('Enter some text in the search bar');
     }
-  } catch (error) {
+  } catch {
     res.status(404).send('not found any rstaurant');
   }
 

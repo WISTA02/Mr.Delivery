@@ -25,9 +25,8 @@ signUpRouter.post('/signup', async (req, res) => {
       };
       const driverRecord = await driverTable.create(driverData);
     }
-
     res.status(201).json(userRecord);
-  } catch (e) {
+  } catch {
     res.status(404).end();
   }
 });
