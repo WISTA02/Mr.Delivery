@@ -6,7 +6,16 @@ const role = require('../../middleware/role.middleware');
 const { mealTable, restTable } = require('../../models/index.model');
 const restaurantMealRouter = express.Router();
 
+<<<<<<< HEAD
+restaurantMealRouter.get(
+  '/rest',
+  bearer,
+  role(['user']),
+  handleGetAllRestaurants
+);
+=======
 restaurantMealRouter.get('/rest', bearer, role(['user']), getAllRest);
+>>>>>>> origin
 restaurantMealRouter.get(
   '/rest-meal/:id',
   bearer,
@@ -14,6 +23,15 @@ restaurantMealRouter.get(
   getAllMeals
 );
 
+<<<<<<< HEAD
+async function handleGetAllRestaurants(req, res) {
+  let userLocation = req.user.location['city'];
+  console.log(userLocation);
+  let restaurants = await restTable.findAll({
+    where: { location: { city: userLocation } },
+  });
+  res.status(200).json(restaurants);
+=======
 async function getAllRest(req, res) {
   try {
     let userLocation = req.user.location['city'];
@@ -26,6 +44,7 @@ async function getAllRest(req, res) {
     res.status(404).send('not found any restaurant');
   }
 
+>>>>>>> origin
 }
 async function getAllMeals(req, res) {
   try {

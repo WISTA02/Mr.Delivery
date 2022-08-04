@@ -53,7 +53,6 @@ async function handleUpdate(req, res) {
     const orderId = parseInt(req.params.id);
     const updatedOrder = { status: 'Restaurant-is-preparing' };
     let order = await orderCollection.read(orderId);
-
     if (order) {
       let updated = await order.update(updatedOrder);
       res.status(201).json(updated);

@@ -7,8 +7,8 @@ const bearer = require('../middleware/bearer.middleware');
 const role = require('../middleware/role.middleware');
 
 getUsersRouter.get('/user-history', bearer, role(['user']), handleGetHistory);
-getUsersRouter.put('/edit-account', bearer, role(['user']), editAccount)
-getUsersRouter.delete('/delete-account', bearer, role(['user']), deletAccount)
+getUsersRouter.put('/edit-account', bearer, role(['user']), editAccount);
+getUsersRouter.delete('/delete-account', bearer, role(['user']), deletAccount);
 
 async function handleGetHistory(req, res) {
   try {
@@ -24,20 +24,17 @@ async function handleGetHistory(req, res) {
 
     res.status(200).json(orders);
   } catch {
-    res.status(404).send("not found any orders");
+    res.status(404).send('not found any orders');
   }
-
 }
 getUsersRouter.get('/users', bearer, role('admin'), async (req, res, next) => {
   const userRecords = await users.findAll();
   res.status(200).json(userRecords);
   let payload = {
-    room: "driver_customer",
-    order: "newOrder"
-  }
+    room: 'driver_customer',
+    order: 'newOrder',
+  };
 });
-
-
 
 async function editAccount(req, res) {
   try {
@@ -52,13 +49,12 @@ async function editAccount(req, res) {
         location: req.body.location,
         phone: req.body.phone,
         email: req.body.email,
-      })
-      res.status(200).json(updateAccount)
+      });
+      res.status(200).json(updateAccount);
     }
   } catch {
-    res.status(500).send("Invalid login");
+    res.status(500).send('Invalid login');
   }
-
 }
 
 async function deletAccount(req, res) {
@@ -73,9 +69,8 @@ async function deletAccount(req, res) {
       res.status(204).send('deleted Account');
     }
   } catch {
-    res.status(500).send("Invalid login");
+    res.status(500).send('Invalid login');
   }
-
 }
 
 module.exports = getUsersRouter;
