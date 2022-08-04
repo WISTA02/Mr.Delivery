@@ -32,23 +32,19 @@ async function handleGetAll(req, res) {
   res.status(200).json(notAcceptedOrders);
 }
 
-// async function handleGetOne(req, res) {
-//   const orderId = parseInt(req.params.id);
-
-//   let order = await orderCollection.read(orderId);
-//   res.status(200).json(order);
-// }
-
 async function handleUpdate(req, res) {
-  const orderId = parseInt(req.params.id);
-  const updatedOrder = { status: 'Restaurant-is-preparing' };
-  let order = await orderCollection.read(orderId);
-
-  if (order) {
-    let updated = await order.update(updatedOrder);
-    res.status(201).json(updated);
-  } else {
-    res.status(404);
+  try {
+    const orderId = parseInt(req.params.id);
+    const updatedOrder = { status: 'Restaurant-is-preparing' };
+    let order = await orderCollection.read(orderId);
+    if (order) {
+      let updated = await order.update(updatedOrder);
+      res.status(201).json(updated);
+    } else {
+      res.status(404).send(`Couldn't find specified order`);
+    }
+  } catch {
+    res.status(404).send('Wrong input');
   }
 }
 

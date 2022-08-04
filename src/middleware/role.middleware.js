@@ -9,10 +9,10 @@ module.exports = (role) => {
       if (role.includes(req.user.role) || req.user.role == 'admin') {
         next();
       } else {
-        next('Access Denied');
+        res.status(403).send('Access Denied').end();
       }
     } catch (e) {
-      next('invalid login');
+      res.status(403).send('Check middleware');
     }
   };
 };
