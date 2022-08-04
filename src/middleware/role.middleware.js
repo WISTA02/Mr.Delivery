@@ -11,13 +11,8 @@ module.exports = (role) => {
       } else {
         res.status(403).send('Access Denied').end();
       }
-<<<<<<< HEAD
-    } catch (e) {
-      res.status(403).send('Check middleware');
-=======
     } catch {
       next('invalid login');
->>>>>>> origin
     }
   };
 };
