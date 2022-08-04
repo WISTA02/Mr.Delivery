@@ -27,7 +27,6 @@ getUsersRouter.get('/users', bearer, role('admin'), async (req, res, next) => {
     room:"driver_customer",
     order:"newOrder"
   }
-  io.emit("join_room","y");
 });
 
 module.exports = getUsersRouter;
