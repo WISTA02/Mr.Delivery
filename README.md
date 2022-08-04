@@ -263,7 +263,7 @@ Configure the root of your repository with the following files and directories. 
 
 <br>
 
-![ER-Diagram](./assets/ER-Diagram.png)
+![ER-Diagram](./assets/WhatsApp%20Image%202022-08-04%20at%2012.42.00%20PM.jpeg)
 
 <br>
 
