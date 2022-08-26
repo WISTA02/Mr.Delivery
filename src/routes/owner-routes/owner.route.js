@@ -13,8 +13,7 @@ const {
 
 const ownerRouter = express.Router();
 ownerRouter.get('/owner', bearer, role(['owner']), handleGetAll);
-ownerRouter.get('/owner-history', bearer, role(['owner']), handleGetOne);
-ownerRouter.put('/order/owner/:id', bearer, role(['owner']), handleUpdate);
+ownerRouter.put('/owner/:id', bearer, role(['owner']), handleUpdate);
 ownerRouter.get('/owner-history', bearer, role(['owner']), handleGetHistory);
 
 async function handleGetAll(req, res) {
@@ -33,18 +32,6 @@ async function handleGetAll(req, res) {
     res.status(200).json(notAcceptedOrders);
   } catch {
     res.status(404).send('not found any orders');
-  }
-
-}
-
-async function handleGetOne(req, res) {
-  try {
-    const orderId = parseInt(req.params.id);
-
-    let order = await orderCollection.read(orderId);
-    res.status(200).json(order);
-  } catch {
-    res.status(404).send('not found this order');
   }
 }
 
@@ -80,7 +67,6 @@ async function handleGetHistory(req, res) {
   } catch {
     res.status(404).send('Not found any orders');
   }
-
 }
 
 module.exports = ownerRouter;
