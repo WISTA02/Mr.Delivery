@@ -8,7 +8,7 @@ const http = require('http');
 const { Server } = require('socket.io');
 
 // Esoteric Resources
-
+const editUserRouter = require('./routes/user.router');
 const searchRouter = require('./routes/user-routes/search.route');
 const ownerRouter = require('./routes/owner-routes/owner.route');
 const locationRouter = require('./routes/user-routes/location.route');
@@ -53,9 +53,9 @@ const io = new Server(server, {
 /*****************socket********************/
 io.on('connection', (socket) => {
   console.log(`user connected : ${socket.id}`);
-  socket.on("x",(data)=>{
-    console.log("-------------------------->");
-  })
+  socket.on('x', (data) => {
+    console.log('-------------------------->');
+  });
   socket.on('join_room', (data) => {
     socket.join(data);
     console.log(`user with id : ${socket.id} joind room : ${data}`);
@@ -95,7 +95,7 @@ app.use(driverRouter);
 app.use(profitsRoute);
 
 app.use(ratingRouter);
-
+app.use(editUserRouter);
 app.use(socketRouter);
 // Catchalls
 app.use(notFound);

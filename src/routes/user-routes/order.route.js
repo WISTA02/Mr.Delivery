@@ -77,7 +77,7 @@ async function handleCreate(req, res) {
       res.status(201).json(order);
     }
   } catch {
-    res.status(403).send('Wrong input');
+    res.status(403).send('Add a location or check your trash code');
   }
 }
 
@@ -94,9 +94,8 @@ async function handleUpdate(req, res) {
       res.status(404);
     }
   } catch {
-    res.status(500).send("Invalid input");
+    res.status(500).send('Invalid input');
   }
-
 }
 
 async function handleDelete(req, res) {
@@ -105,9 +104,8 @@ async function handleDelete(req, res) {
     let order = await orderCollection.delete(orderId);
     res.status(204).json(order);
   } catch {
-    res.status(500).send("Invalid input");
+    res.status(500).send('Invalid input');
   }
-
 }
 
 module.exports = orderRouter;

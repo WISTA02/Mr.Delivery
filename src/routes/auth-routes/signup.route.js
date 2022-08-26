@@ -3,9 +3,10 @@ const express = require('express');
 require('dotenv').config();
 const { users, driverTable } = require('../../models/index.model');
 const bcrypt = require('bcrypt');
+const cors = require('../../middleware/cors.middleware');
 const signUpRouter = express.Router();
 
-signUpRouter.post('/signup', async (req, res) => {
+signUpRouter.post('/signup', cors, async (req, res) => {
   try {
     const hashedPass = await bcrypt.hash(req.body.password, 10);
     const userData = {
