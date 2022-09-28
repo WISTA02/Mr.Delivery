@@ -11,6 +11,10 @@ const mealModel = (sequelize, DataTypes) =>
       price: { type: DataTypes.FLOAT(6) },
 
       restaurant_id: { type: DataTypes.INTEGER },
+
+      image: { type: DataTypes.JSONB },
+
+      flag: { type: DataTypes.ARRAY(DataTypes.STRING) },
     },
     { timestamps: false }
   );
