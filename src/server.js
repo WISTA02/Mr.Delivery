@@ -26,6 +26,7 @@ const driverInfoRouter = require('./routes/admin-routes/driverInformation.route'
 const profitsRoute = require('./routes/profits.route');
 const ratingRouter = require('./routes/user-routes/rating.route');
 const socketRouter = require('./routes/socket.route');
+const approveRouter = require('./routes/admin-routes/approve.route');
 // Prepare the express app
 const app = express();
 app.use(
@@ -89,6 +90,7 @@ app.use(restaurantRouter);
 app.use(driverRouter);
 app.use(orderRouter);
 app.use(driverInfoRouter);
+app.use(approveRouter);
 // Routes
 app.use(driverRouter);
 

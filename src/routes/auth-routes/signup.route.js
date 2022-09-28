@@ -3,12 +3,15 @@ const express = require('express');
 require('dotenv').config();
 const { users, driverTable } = require('../../models/index.model');
 const bcrypt = require('bcrypt');
-const cors = require('../../middleware/cors.middleware');
 const signUpRouter = express.Router();
 
-signUpRouter.post('/signup', cors, async (req, res) => {
+signUpRouter.post('/signup', async (req, res) => {
   try {
     const hashedPass = await bcrypt.hash(req.body.password, 10);
+    let approvedDB = true;
+    if (req.body.role == 'driver' || req.body.role == 'owner') {
+      approvedDB = false;
+    }
     const userData = {
       username: req.body.username,
       password: hashedPass,
@@ -16,6 +19,7 @@ signUpRouter.post('/signup', cors, async (req, res) => {
       location: req.body.location,
       phone: req.body.phone,
       email: req.body.email,
+      approved: approvedDB,
     };
 
     const userRecord = await users.create(userData);
@@ -27,8 +31,9 @@ signUpRouter.post('/signup', cors, async (req, res) => {
       const driverRecord = await driverTable.create(driverData);
     }
     res.status(201).json(userRecord);
-  } catch {
-    res.status(404).end();
+  } catch (err) {
+    console.log(err);
+    res.status(500).end();
   }
 });
 
