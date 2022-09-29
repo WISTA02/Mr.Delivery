@@ -9,8 +9,8 @@ signInRouter.post('/signin', basicAuth, (req, res) => {
       user: req.user,
     };
     res.status(200).json(user);
-  } catch {
-    res.status(500).send('Invalid login');
+  } catch (e){
+    res.status(500).send(e);
   }
 });
 module.exports = signInRouter;
