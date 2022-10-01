@@ -35,6 +35,8 @@ async function handleCreate(req, res) {
       delivery_fee: req.body.delivery_fee,
       location: req.body.location,
       owner_id: req.body.owner_id,
+      image: req.body.image,
+      category: req.body.category,
     };
 
     let user_Id = req.user.id;
