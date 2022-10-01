@@ -4,7 +4,7 @@
 
 [GITHUB](https://github.com/WISTA02/better-talabat-clone)
 
-[HEROKU](https://mr-delivery-wista.herokuapp.com/)
+[HEROKU](https://mr-delivery-app.herokuapp.com/)
 
 <BR>
 
