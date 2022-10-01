@@ -17,9 +17,8 @@ async function handleGetAll(req, res) {
   try {
     let allRecords = await mealsCollection.read();
     res.status(200).json(allRecords);
-  }
-  catch {
-    res.status(404).send('not found any meals')
+  } catch {
+    res.status(404).send('not found any meals');
   }
 }
 
@@ -28,9 +27,8 @@ async function handleGetOne(req, res) {
   try {
     let theRecord = await mealsCollection.read(id);
     res.status(200).json(theRecord);
-  }
-  catch {
-    res.status(404).send('not found this meal')
+  } catch {
+    res.status(404).send('not found this meal');
   }
 }
 
@@ -41,11 +39,11 @@ async function handleCreate(req, res) {
       description: req.body.description,
       price: req.body.price,
       restaurant_id: req.params.id,
+      flag: req.body.flag,
     };
     let newRecord = await mealsCollection.create(obj);
     res.status(201).json(newRecord);
-  }
-  catch {
+  } catch {
     res.status(500).send('Invalid Input');
   }
 }
@@ -61,11 +59,9 @@ async function handleUpdate(req, res) {
     } else {
       res.status(404).send('Not found');
     }
-  }
-  catch {
+  } catch {
     res.status(500).send('Invalid Input');
   }
-
 }
 
 async function handleDelete(req, res) {
@@ -73,11 +69,9 @@ async function handleDelete(req, res) {
     let id = req.params.id;
     let deletedRecord = await mealsCollection.delete(id);
     res.status(204).json(deletedRecord);
+  } catch {
+    res.status(404).send('not found this meal');
   }
-  catch {
-    res.status(404).send('not found this meal')
-  }
-
 }
 
 module.exports = router;
