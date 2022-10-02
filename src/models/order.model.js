@@ -18,14 +18,18 @@ const orderDetailsModel = (sequelize, DataTypes) =>
         defaultValue: 'New-order',
       },
       total_price: { type: DataTypes.FLOAT(6) },
-      rated:{type:DataTypes.BOOLEAN,defaultValue:false},
+
+      rated: { type: DataTypes.BOOLEAN, defaultValue: false },
 
       restaurant_id: { type: DataTypes.INTEGER },
 
+      restaurant_name: { type: DataTypes.STRING },
+
+      restaurant_location: { type: DataTypes.JSONB },
+
       driver_id: { type: DataTypes.INTEGER },
 
-      rated:{type:DataTypes.BOOLEAN,defaultValue:false},
-
+      rated: { type: DataTypes.BOOLEAN, defaultValue: false },
     },
     { timestamps: false }
   );

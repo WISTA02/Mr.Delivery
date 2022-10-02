@@ -46,7 +46,7 @@ async function handleGetOne(req, res) {
 async function handleCreate(req, res) {
   try {
     if (!req.user.location['city']) {
-      res.status(401).send('Please add a valid location/ city name');
+      res.status(403).send('Please add a valid location/ city name');
     } else {
       let mealForDelivery = await mealTable.findOne({
         where: { id: req.body.all_items[0]['meal_id'] },
@@ -70,6 +70,8 @@ async function handleCreate(req, res) {
         total_price: totalPrice,
         userId: req.user.id,
         restaurant_id: req.params.id,
+        restaurant_name: restForDelivery.name,
+        restaurant_location: restForDelivery.location,
       };
       // customerConnection.emit("new_order",newOrder);
       let order = await orderCollection.create(newOrder);
