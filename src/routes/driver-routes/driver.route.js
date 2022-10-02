@@ -3,6 +3,7 @@ const bearer = require('../../middleware/bearer.middleware');
 const role = require('../../middleware/role.middleware');
 const { orderTable, restTable, users } = require('../../models/index.model');
 const driverRouter = express.Router();
+const { Op } = require("sequelize");
 
 driverRouter.get('/driver', bearer, role(['driver']), getAllOrder);
 driverRouter.put('/driver/:id', bearer, role(['driver']), updateStatus);
@@ -11,12 +12,14 @@ driverRouter.get('/driver-history', bearer, role(['driver']), handleGetHistory);
 async function getAllOrder(req, res) {
   let orders = await orderTable.findAll({
     where: {
-      status: 'Restaurant-is-preparing',
-    },
+      [Op.or]: [
+        { status: 'Restaurant-is-preparing' },
+        { status: 'Driver-accepted' }, { status: 'Out-for-delivery' }
+      ]
+    }
   });
   res.status(200).json(orders);
 }
-
 async function updateStatus(req, res) {
   try {
     let orderId = req.params.id;

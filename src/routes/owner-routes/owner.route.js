@@ -24,7 +24,10 @@ async function handleGetAll(req, res) {
     let restaurantId = restaurant.id;
     let notAcceptedOrders = await orderTable.findAll({
       where: {
-        status: 'New-order',
+        [Op.or]: [
+          { status: 'Restaurant-is-preparing' },
+          { status: 'New-order' }
+        ],
         restaurant_id: restaurantId,
       },
     });
