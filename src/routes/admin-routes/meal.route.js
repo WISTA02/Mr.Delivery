@@ -40,6 +40,7 @@ async function handleCreate(req, res) {
       price: req.body.price,
       restaurant_id: req.params.id,
       flag: req.body.flag,
+      image: req.body.image,
     };
     let newRecord = await mealsCollection.create(obj);
     res.status(201).json(newRecord);
