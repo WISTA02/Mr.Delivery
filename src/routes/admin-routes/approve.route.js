@@ -24,7 +24,7 @@ async function handleGetAll(req, res) {
 async function handleGetOne(req, res) {
   const id = req.params.id;
   try {
-    let theRecord = await users.read(id);
+    let theRecord = await users.findOne({ where: { id: id } });
     res.status(200).json(theRecord);
   } catch {
     res.status(403).send('No users were found');
@@ -46,13 +46,15 @@ async function handleUpdate(req, res) {
 }
 
 async function handleDelete(req, res) {
+  let id = req.params.id;
+
   try {
-    let id = req.params.id;
     let found = await users.findOne({ where: { id: id } });
+
     if (found) {
-      let deletedRecord = await users.destroy(found);
+      let deletedRecord = await found.destroy();
     }
-    res.status(204).json({ message: 'done' });
+    res.status(204).send({ message: 'done' });
   } catch {
     res.status(400).send('User wasnt found');
   }
