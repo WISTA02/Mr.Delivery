@@ -44,6 +44,7 @@ async function editAccount(req, res) {
     if (user) {
       const hashedPass = await bcrypt.hash(req.body.password, 10);
       let updateAccount = user.update({
+        username: req.body.username,
         password: hashedPass,
         role: req.body.role,
         location: req.body.location,
