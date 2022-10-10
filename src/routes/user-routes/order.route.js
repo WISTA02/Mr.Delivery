@@ -22,7 +22,7 @@ const {
 const role = require('../../middleware/role.middleware');
 const orderRouter = express.Router();
 orderRouter.get('/order', bearer, role(['admin']), handleGetAll);
-orderRouter.get('/order/:id', bearer, role(['admin']), handleGetOne);
+orderRouter.get('/order/:id', bearer, role(['user']), handleGetOne);
 orderRouter.post('/order/:id', bearer, role(['user']), handleCreate);
 orderRouter.put('/order/:id', bearer, role(['admin']), handleUpdate);
 orderRouter.delete('/order/:id', bearer, role(['admin']), handleDelete);
