@@ -6,9 +6,9 @@ const { users, orderTable } = require('../models/index.model');
 const bearer = require('../middleware/bearer.middleware');
 const role = require('../middleware/role.middleware');
 
-getUsersRouter.get('/user-history', bearer, role(['user']), handleGetHistory);
-getUsersRouter.put('/edit-account', bearer, role(['user']), editAccount);
-getUsersRouter.delete('/delete-account', bearer, role(['user']), deletAccount);
+getUsersRouter.get('/user-history', bearer, handleGetHistory);
+getUsersRouter.put('/edit-account', bearer, editAccount);
+getUsersRouter.delete('/delete-account', bearer, deletAccount);
 
 async function handleGetHistory(req, res) {
   try {

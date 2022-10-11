@@ -6,8 +6,8 @@ const restaurantRouter = express.Router();
 const bearer = require('../../middleware/bearer.middleware');
 const role = require('../../middleware/role.middleware');
 
-restaurantRouter.get('/restaurant', bearer, role(['admin']), handleGetAll);
-restaurantRouter.get('/restaurant/:id', bearer, role(['admin']), handleGetOne);
+restaurantRouter.get('/restaurant', handleGetAll);
+restaurantRouter.get('/restaurant/:id', handleGetOne);
 restaurantRouter.post('/restaurant', bearer, role(['admin']), handleCreate);
 restaurantRouter.put('/restaurant/:id', bearer, role(['admin']), handleUpdate);
 restaurantRouter.delete(

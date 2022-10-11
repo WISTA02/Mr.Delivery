@@ -7,8 +7,8 @@ const router = express.Router();
 
 const { mealsCollection, restTable } = require('../../models/index.model');
 
-router.get('/meal', bearer, handleGetAll);
-router.get('/meal/:id', bearer, role(['admin']), handleGetOne);
+router.get('/meal', handleGetAll);
+router.get('/meal/:id', handleGetOne);
 router.post('/meal/:id', bearer, role(['admin']), handleCreate);
 router.put('/meal/:id', bearer, role(['admin']), handleUpdate);
 router.delete('/meal/:id', bearer, role(['admin']), handleDelete);

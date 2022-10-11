@@ -14,7 +14,7 @@ async function getAllOrder(req, res) {
     where: {
       [Op.or]: [
         { status: 'Restaurant-is-preparing' },
-        { status: 'Driver-accepted' }, { status: 'Out-for-delivery' }
+        { status: 'Driver-accepted' }, { status: 'Out-for-delivery' }, { status: 'Delivered' }
       ]
     }
   });
