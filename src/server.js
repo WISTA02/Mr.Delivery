@@ -31,7 +31,7 @@ const approveRouter = require('./routes/admin-routes/approve.route');
 const app = express();
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true, //access-control-allow-credentials:true
   })
